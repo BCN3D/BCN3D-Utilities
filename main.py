@@ -10,6 +10,8 @@ import sys
 import re
 import os 
 import urllib
+import serial
+import glob
 
 
 #Now some information about the program itself
@@ -34,6 +36,14 @@ Suggested Milestones
 
 """
 
+BAUDRATE = 250000
+
+def matchInList(text, list):
+#Returns a list of matching values in a specified list
+	match = [s for s in list if text in s]
+	return match
+
+
 def getLatestVersion():
 		#First we get the webpage and look for the last Release
 	url = ('https://github.com/reprapbcn/BCN3D-Firmware/releases/')
@@ -46,9 +56,8 @@ def getLatestVersion():
 		#We didn't get a version so an error ocurred. Get out with a message
 		sys.stderr.write('Couldn\'t find the Latest Version!')
 		sys.exit(1)
-	version = versionMatch.group(1)
+	global version = versionMatch.group(1)
 	print 'The latest firmware version available is: ',version
-	return version
 
 def downloadLatestVersion(version,base_url):
 	#Now that we have the version, we can retrieve it from the internet and save it in the
@@ -58,22 +67,85 @@ def downloadLatestVersion(version,base_url):
 	dir = 'Versions'
 	if not os.path.exists(dir):
 		os.mkdir(dir)
-		releases = os.listdir('./'+dir)
-		if (version + '.zip') in releases:
-			print 'Alreafy up to date!'
-		else:
-			print 'Downloading Version... ',version
-			urllib.urlretrieve(version_url, os.path.join(dir, version + '.zip'))
-			print 'Done downloading!'
+
+	#Get a list of files in the directory "Versions" and check if we're up to date.
+	#If not, download the last version from the internet.		
+	releases = os.listdir('./'+ dir)
+	if (version + '.zip') in releases:
+		print 'Repositories up to date!'
+	else:
+		print 'Downloading Version... ',version
+		urllib.urlretrieve(version_url, os.path.join(dir, version + '.zip'))
+		print 'Done downloading!'
+		#Now we need to unzip it
+		print 'Inflating files...'
+		os.system('unzip -q ./' + version + '.zip')
+		print 'Done unziping the files!'
+
+def openSerialPort():
+	#In this function we're going to open a serial port connection with the printer and listen
+	#in the firts lines the printer will write it's firmware version so we can compare.
+	#The functionality is provided by the PySerial module
+	#We scan the serial ports so we can choose the right one
+
+	#Need to implement the cross platform code for Win & Linux systems
+	print 'Scanning Serial Ports...'
+		ports = glob.glob('/dev/tty.*')
+		for port in ports:
+			print port +'\n',
+
+		#Now we need to select the correct com port. It will be something like tty.usb...
+		printer_port = matchInList('tty.usb', ports)[0]
+		return serial.Serial(printer_port, BAUDRATE, timeout=5)
+
+
+def getDataSerialPort():
+	ser = openSerialPort()
+	global serial_data = ser.readline()	#Until it finds a CR '\n'
+	ser.close()
+
+def printerNeedsUpdate():
+	printer_version = re.search(r'([\d.]+)', serial_data)
+	version_list = version.split('.')
+	printer_version_list = printer_version.split('.')
+	
+	if printer_version_list[0] < version_list[0] or printer_version_list[1] < version_list[1] or printer_version_list[2] < version_list[2]
+		needUpdate = True
+	else 
+		needUpdate = False
+
+	return needUpdate
+
+def runUpdate():
+#In this function we're going to launch avrdude and upload the corresponding .hex file
+#We can achieve that by doing os.system('command') or os.popen('command')
+
+
+def checkavrdude():
+##Let's check if the computer already has the avrdude program. If not give an advice
+	avr_dir_mac = '/usr/local/'
+	installations = glob.glob(avr_dir_mac + 'CrossPack-AVR*')
+
+	if installations:
+		return True
+	else:
+		return False
 
 
 def main():
 	base_url = 'https://github.com/reprapbcn/BCN3D-Firmware/archive/'
-	version = getLatestVersion()
+	getLatestVersion()
 	downloadLatestVersion(version, base_url)
+	getDataSerialPort()
 
-
-
+	if printerNeedsUpdate():
+		if checkavrdude():
+			print 'You need to install avrdude! look for CrossPack-AVR for Mac OS'
+		else:
+		runUpdate()
+		print 'Your printer is up to date now. Enjoy!'
+	else:
+		print 'Your printer is already up to date. Nothing to do...'
 
 
 #Just the regular boilerplate to start the program
