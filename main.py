@@ -47,18 +47,30 @@ def getLatestVersion():
 		sys.stderr.write('Couldn\'t find the Latest Version!')
 		sys.exit(1)
 	version = versionMatch.group(1)
-	print 'The latest firmware version is: ',version
+	print 'The latest firmware version available is: ',version
+	return version
 
-
-
-
-
-
-
+def downloadLatestVersion(version,base_url):
+	#Now that we have the version, we can retrieve it from the internet and save it in the
+	#Versions directory. We need to create it if it doesn't exists.
+	#First we need to contruct the url to retrieve the content
+	version_url = base_url + version + '.zip'
+	dir = 'Versions'
+	if not os.path.exists(dir):
+		os.mkdir(dir)
+		releases = os.listdir('./'+dir)
+		if (version + '.zip') in releases:
+			print 'Alreafy up to date!'
+		else:
+			print 'Downloading Version... ',version
+			urllib.urlretrieve(version_url, os.path.join(dir, version + '.zip'))
+			print 'Done downloading!'
 
 
 def main():
-	getLatestVersion()
+	base_url = 'https://github.com/reprapbcn/BCN3D-Firmware/archive/'
+	version = getLatestVersion()
+	downloadLatestVersion(version, base_url)
 
 
 
