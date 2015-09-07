@@ -1,0 +1,26 @@
+#Run(Goldelox,Comx,9600,5,Wrap)
+
+/****************************************************************************************
+*                                                                                       *
+*  4D Script Sample                                                                     *
+*                                                                                       *
+*  Date:           23 April 2010                                                        *
+*                                                                                       *
+*  Description:    Load4DGLProgram Loads a Precompiled 4DGL program onto a display      *
+*                                                                                       *
+*  Requirements:   The compiled program (both the cfg and 4xe files)                    *
+*                                                                                       *
+*                  An override for the com port to be set                               *
+*  EG:                                                                                  *
+*                                                                                       *
+*  scriptc scripts\4dgl\load4DGLProgram /ccom4                                          *
+*                                                                                       *
+*                                                                                       *
+*  Note: In this case the Goldelox / Picaso specification is meaningless as there is    *
+*        no code created that differs between Goldelox and Picaso.                      *
+*                                                                                       *
+*        The Ram / Flash option is ignored for Goldelox programs                        *
+*                                                                                       *
+****************************************************************************************/
+
+$4DGLLoadProgram("c:\Documents and Settings\All Users\Documents\4D Labs\GOLDELOX GFX2\tests\gfx2_BigDemo",Ram)

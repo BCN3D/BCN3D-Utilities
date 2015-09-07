@@ -1,0 +1,30 @@
+#Run(Goldelox,COM4,9600,5,Wrap)
+
+/****************************************************************************************
+*                                                                                       *
+*  4D Script Sample                                                                     *
+*                                                                                       *
+*  Date:           25 April 2010                                                        *
+*                                                                                       *
+*  Description:    Load4DGLall Loads PmmC, Program and sectors.                         *
+*                                                                                       *
+*  Requirements:   The sum of the requirements of the three included scripts            *
+*                                                                                       *
+*                  An override for the com port to be set                               *
+*  EG:                                                                                  *
+*                                                                                       *
+*  scriptc scripts\4dgl\load4DGLuSD /ccom4 /dusdfile c:\usdSector0.hex                  *
+*                                                                                       *
+*                                                                                       *
+*  Note: In this case the Goldelox / Picaso specification is meaningless as there is    *
+*        no code created that differs between Goldelox and Picaso.                      *
+*                                                                                       *
+****************************************************************************************/
+
+#define pmmcname  "c:\4droot\pmmcs\uOLED-128-G1GFX-R20.PmmC"
+#define usdfile   "c:\usd0.hex"
+
+#include loadpmmc.4dscript
+#include load4dglprogram.4dscript
+#include load4dgluSD.4dscript
+

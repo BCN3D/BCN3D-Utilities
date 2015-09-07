@@ -1,0 +1,28 @@
+#Run(Goldelox,Comx,9600,5,Wrap)
+
+/****************************************************************************************
+*                                                                                       *
+*  4D Script Sample                                                                     *
+*                                                                                       *
+*  Date:           23 April 2010                                                        *
+*                                                                                       *
+*  Description:    Load4DGLuSD Loads sectors onto a uSD card installed in a display     *
+*                                                                                       *
+*  Requirements:   The compiled program (both the cfg and 4xe files)                    *
+*                                                                                       *
+*                  An override for the com port to be set                               *
+*  EG:                                                                                  *
+*                                                                                       *
+*  scriptc scripts\4dgl\load4DGLuSD /ccom4 /dusdfile c:\usdSector0.hex                  *
+*                                                                                       *
+*                                                                                       *
+*  Note: In this case the Goldelox / Picaso specification is meaningless as there is    *
+*        no code created that differs between Goldelox and Picaso.                      *
+*                                                                                       *
+****************************************************************************************/
+
+$4DGLAttn
+
+$WriteSectors(usdfile, 0)
+
+$4DGLExit

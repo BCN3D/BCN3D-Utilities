@@ -1,0 +1,24 @@
+#Run(Goldelox,Comx,9600,5,Wrap)
+
+/****************************************************************************************
+*                                                                                       *
+*  4D Script Sample                                                                     *
+*                                                                                       *
+*  Date:           23 April 2010                                                        *
+*                                                                                       *
+*  Description:    LoadPmmC Loads a PmmC onto a display                                 *
+*                                                                                       *
+*  Requirements:   A define for pmmcname to be passed as a parameter                    *
+*                                                                                       *
+*                  An override for the com port to be set                               *
+*  EG:                                                                                  *
+*                                                                                       *
+*  scriptc scripts\4dgl\loadpmmc /ccom4 /dpmmcname "c:\pmmcs\uoled-128-g1sgc-r15.pmmc"  *
+*                                                                                       *
+*                                                                                       *
+*  Note: In this case the Goldelox / Picaso specification is meaningless as there is    *
+*        no code created that differs between Goldelox and Picaso                       *
+*                                                                                       *
+****************************************************************************************/
+
+$LoadPmmC(pmmcname)
