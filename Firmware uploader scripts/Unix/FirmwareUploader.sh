@@ -1,5 +1,7 @@
 #!/bin/bash
-
+#Variables
+OPTIONS="Firmware Bootloader Exit"
+clear
 echo -------------------------------------------------------------
 echo -e " \n"
 echo FIRMWARE UPLOADER FOR BCN3D ELECTRONICS
@@ -8,25 +10,34 @@ echo ------------------------------------------------------------
 
 echo -e "\n"
 echo Select between uploading the firmware or burning the bootloader.
-echo -e "F" means firmware and "B" means Bootloader.
 echo -e Press "Q" to "exit" the program.
 
-#until command is done when the expression is false
-until [ $command Q]; do
-	echo -e "Please, enter your option: \c "
-	read command
-	if [ $command = "F" ]; then
+#we're going to run a Select to make a simple menu
+select opt in $OPTIONS; do
+	if [ "$opt" = "Firmware" ]; then
 		echo F detected, Firmware it is!
 		#Now we're going to load the firmware
-	else if [ $command = "B" ]; then
+		loadFirmware
+	elif [ "$opt" = "Bootloader" ]; then
 		echo B detected, Bootloader it is!
 		#Now we're going to load the Bootloader
+		loadBootloader
+	elif [ "$opt" = "Exit" ]; then
+		echo Bye! see you soon
+		sleep 2
+		exit
 	else
-		echo Please, enter a valid option: F, B or Q to quit
+		echo Please, enter a valid option! Select the numbers
 	fi
-	clear
 done
 
-#If we are here, it means we've read a Q --> quit program
-echo Bye bye!
 
+#User functions
+function loadFirmware {
+	echo Uploading the firmware
+}
+
+function loadBootloader {
+	echo Please make sure that the programmmer AVRISPmkII is connected!
+	echo Uploading the Bootloader
+}
