@@ -64,9 +64,10 @@ function loadBootloader {
 	
 	#return to menu
 	menu
-}
+} 
 
 function menu {
+	echo -e "\n"
 	#we're going to run a Select to make a simple menu
 	select opt in $OPTIONS; do
 		if [ "$opt" = "Firmware" ]; then
@@ -98,7 +99,6 @@ echo FIRMWARE UPLOADER FOR BCN3D ELECTRONICS
 echo -e "\n"
 echo ------------------------------------------------------------
 
-echo -e "\n"
 echo Select between uploading the firmware or burning the bootloader.
 echo -e Press "Q" to "exit" the program.
 menu
