@@ -9,7 +9,8 @@
 OPTIONS="Firmware Bootloader Exit"
 FILE="Marlin.hex"
 DIR=~/bcn3d-utilities/Firmware\ uploader\ scripts/Unix/
-PACKAGES=(avrdude)
+PACKAGES=(flex byacc bison gcc libusb libusb-dev avr-libc avrdude)
+BOOTLOADER=stk500boot_v2_mega2560.hex
 
 #User functions
 function start {
@@ -60,8 +61,10 @@ function loadFirmware {
 
 function loadBootloader {
         echo Please make sure that the programmmer AVRISPmkII is connected!
-        echo Uploading the Bootloader
-	
+	echo SETTING THE CHIP FUSES...
+	sudo avrdude -c avrispmkII -p m2560 -P usb -u -U lfuse:w:0xFF:m -U hfuse:w:0xD8:m -U efuse:w:0xFD:m -v	
+	echo BURNING THE BOOTLOADER...
+	sudo avrdude -c avrispmkII -p m2560 -P usb -u -U flash:w:$BOOTLOADER:i
 	#return to menu
 	menu
 } 
