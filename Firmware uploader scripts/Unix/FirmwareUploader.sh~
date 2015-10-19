@@ -8,17 +8,17 @@
 #Variables
 OPTIONS="Firmware Bootloader Exit"
 FILE="Marlin.hex"
-DIR=~/bcn3d-utilities/Firmware\ uploader\ scripts/Unix/
+DIR="~/bcn3d-utilities/Firmware uploader scripts/Unix"
 PACKAGES=(avrdude setserial)
 
 #User functions
 function start {
 	#Look for needed packages
-	for i in ${PACKAGES[*]}; do
+	for i in ${PACKAGES}; do
 		if dpkg-query -W $i; then
 			echo You have already $i installed
 		else
-			echo You don\'t have $i installed
+			echo You don't have $i installed
 			echo -e Do you want to "install" it? "[y/n]"
 			read INSTALL
 			if [ $INSTALL == "y" ]; then
@@ -32,6 +32,7 @@ function start {
 	echo -e Do you want to download updates from Github? "[y/n]"
 	read UPDATES
 	if [ $UPDATES == "y" ]; then
+		cd $DIR
 		git pull
 	fi
 }
@@ -75,7 +76,7 @@ select opt in $OPTIONS; do
 		clear
 	elif [ "$opt" = "Exit" ]; then
 		echo Bye! see you soon
-		sleep 1
+		sleep 2
 		exit
 	else
 		echo Please, enter a valid option! Select the numbers
