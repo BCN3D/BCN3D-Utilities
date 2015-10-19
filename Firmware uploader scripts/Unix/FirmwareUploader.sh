@@ -45,17 +45,48 @@ function comPorts {
 		
 	else
 		echo There is no Board connected. Please verify and reconnect.
+		menu
+	fi
 }
 
 function loadFirmware {
         echo Uploading the firmware...
 	comPorts
-	avrdude -p m2560 -c avrispmkII -P /dev/ttyUSB$COMPORT -D -U flash:W:$FILE:i
+	avrdude -p m2560 -c avrispmkII -P /dev/ttyUSB$COMPORT -D -U flash:w:$FILE:i
+	
+	#return to menu
+	menu
 }
 
 function loadBootloader {
         echo Please make sure that the programmmer AVRISPmkII is connected!
         echo Uploading the Bootloader
+	
+	#return to menu
+	menu
+}
+
+function menu {
+	#we're going to run a Select to make a simple menu
+	select opt in $OPTIONS; do
+		if [ "$opt" = "Firmware" ]; then
+			echo F detected, Firmware it is!
+			#Now we're going to load the firmware
+			loadFirmware
+			sleep 2
+		elif [ "$opt" = "Bootloader" ]; then
+			echo B detected, Bootloader it is!
+			#Now we're going to load the Bootloader
+			loadBootloader
+			sleep 2
+		elif [ "$opt" = "Exit" ]; then
+			echo Bye! see you soon
+			sleep 1
+			exit
+		else
+			echo Please, enter a valid option! Select the numbers
+		fi
+done
 }
 
 
@@ -70,26 +101,5 @@ echo ------------------------------------------------------------
 echo -e "\n"
 echo Select between uploading the firmware or burning the bootloader.
 echo -e Press "Q" to "exit" the program.
+menu
 
-#we're going to run a Select to make a simple menu
-select opt in $OPTIONS; do
-	if [ "$opt" = "Firmware" ]; then
-		echo F detected, Firmware it is!
-		#Now we're going to load the firmware
-		loadFirmware
-		sleep 2
-		clear
-	elif [ "$opt" = "Bootloader" ]; then
-		echo B detected, Bootloader it is!
-		#Now we're going to load the Bootloader
-		loadBootloader
-		sleep 2
-		clear
-	elif [ "$opt" = "Exit" ]; then
-		echo Bye! see you soon
-		sleep 1
-		exit
-	else
-		echo Please, enter a valid option! Select the numbers
-	fi
-done
