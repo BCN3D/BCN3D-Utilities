@@ -9,7 +9,7 @@
 OPTIONS="Firmware Bootloader Exit"
 FILE="Marlin.hex"
 DIR=~/bcn3d-utilities/Firmware\ uploader\ scripts/Unix/
-PACKAGES=(avrdude setserial)
+PACKAGES=(avrdude)
 
 #User functions
 function start {
@@ -36,9 +36,21 @@ function start {
 	fi
 }
 
+function comPorts {
+	if [[ $(ls -lA /dev/ | grep ttyUSB*) ]]; then
+		echo These are the COM Ports available:
+		ls -lA /dev/ | grep ttyUSB*
+		echo -e "Select your COM Port: [Number]"
+		read COMPORT
+		
+	else
+		echo There is no Board connected. Please verify and reconnect.
+}
+
 function loadFirmware {
         echo Uploading the firmware...
-	avrdude -p m2560 -c avrispmkII -P $COMPORT -D -U flash:W:$FILE:i
+	comPorts
+	avrdude -p m2560 -c avrispmkII -P /dev/ttyUSB$COMPORT -D -U flash:W:$FILE:i
 }
 
 function loadBootloader {
