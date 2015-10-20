@@ -6,10 +6,10 @@
 #Marc Cobler Cosmen - October 2015
 
 #Variables
-OPTIONS="Firmware Bootloader Exit"
+OPTIONS="Bootloader Firmware Everything Exit"
 FILE="Marlin.hex"
 DIR=~/bcn3d-utilities/Firmware\ uploader\ scripts/Unix/
-PACKAGES=(flex byacc bison gcc libusb libusb-dev avr-libc avrdude)
+PACKAGES=(flex byacc bison gcc libusb-dev avr-libc avrdude setserial)
 BOOTLOADER=stk500boot_v2_mega2560.hex
 
 #User functions
@@ -35,6 +35,7 @@ function start {
 	if [ $UPDATES == "y" ]; then
 		git pull
 	fi
+	clear
 }
 
 function comPorts {
@@ -52,9 +53,12 @@ function comPorts {
 
 function loadFirmware {
         echo Uploading the firmware...
-	comPorts
-	avrdude -p m2560 -c avrispmkII -P /dev/ttyUSB$COMPORT -D -U flash:w:$FILE:i
-	
+	if [ $1 -eq 0 ]; then
+		avrdude -p m2560 -c avrispmkII -P /dev/ttyUSB$1 -D -U flash:w:$FILE:i
+	else
+		comPorts
+		avrdude -p m2560 -c avrispmkII -P /dev/ttyUSB$COMPORT -D -U flash:w:$FILE:i
+	fi
 	#return to menu
 	menu
 }
@@ -87,6 +91,10 @@ function menu {
 			echo Bye! see you soon
 			sleep 1
 			exit
+		elif [ "$opt" = "Everything" ]; then
+			loadBootloader
+			loadFirmware 0
+			menu
 		else
 			echo Please, enter a valid option! Select the numbers
 		fi
