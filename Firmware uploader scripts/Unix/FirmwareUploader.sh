@@ -7,11 +7,11 @@
 
 #Variables
 OPTIONS="Bootloader Firmware Everything Exit"
-FILE="Marlin.hex"
+FILESDIR=~/bcn3d-utilities/Firmware\ uploader\ scripts/Files
 DIR=~/bcn3d-utilities/Firmware\ uploader\ scripts/Unix/
 PACKAGES=(flex byacc bison gcc libusb-dev avr-libc avrdude setserial)
-BOOTLOADER=stk500boot_v2_mega2560.hex
-
+BOOTLOADER=BCN3D-stk500boot.hex
+FIRMWARES = ""
 #User functions
 function start {
 	#Look for needed packages
@@ -38,6 +38,17 @@ function start {
 	clear
 }
 
+function listFirmwares {
+	FIRMWARES="$(ls ../Files | grep "Sigma*")"
+	echo -e "Which firmware do you want to upload?"
+	echo -e " Remember if you want to change the firmware you have to reboot script"
+	#Let's print the options and select them
+	select firmware in $FIRMWARES; do
+		echo -e The selected Firmware is: $firmware
+		break
+	done
+}
+
 function comPorts {
 	if [[ $(ls -lA /dev/ | grep ttyUSB*) ]]; then
 		echo These are the COM Ports available:
@@ -54,16 +65,17 @@ function comPorts {
 function loadFirmware {
         echo Uploading the firmware...
 	if [ $1 -eq 0 ]; then
-		avrdude -p m2560 -c avrispmkII -P /dev/ttyUSB$1 -D -U flash:w:$FILE:i
+		avrdude -p m2560 -c avrispmkII -P /dev/ttyUSB$1 -D -U flash:w:$firmware:i
 	else
 		comPorts
-		avrdude -p m2560 -c avrispmkII -P /dev/ttyUSB$COMPORT -D -U flash:w:$FILE:i
+		avrdude -p m2560 -c avrispmkII -P /dev/ttyUSB$COMPORT -D -U flash:w:$firmware:i
 	fi
 	#return to menu
 	menu
 }
 
 function loadBootloader {
+	cd $FILESDIR
         echo Please make sure that the programmmer AVRISPmkII is connected!
 	echo SETTING THE CHIP FUSES...
 	sudo avrdude -c avrispmkII -p m2560 -P usb -u -U lfuse:w:0xFF:m -U hfuse:w:0xD8:m -U efuse:w:0xFD:m -v	
@@ -104,13 +116,14 @@ done
 
 clear
 start
+#List the available firmwares and select it
+listFirmwares
 echo -------------------------------------------------------------
 echo -e "\n"
 echo FIRMWARE UPLOADER FOR BCN3D ELECTRONICS
 echo -e "\n"
 echo ------------------------------------------------------------
-
-echo Select between uploading the firmware or burning the bootloader.
-echo -e Press "Q" to "exit" the program.
+echo -e "\n"
+#show the menu
 menu
 
