@@ -64,6 +64,7 @@ function comPorts {
 
 function loadFirmware {
         echo Uploading the firmware...
+	cd ../Files
 	if [ $1 -eq 0 ]; then
 		avrdude -p m2560 -c avrispmkII -P /dev/ttyUSB$1 -D -U flash:w:$firmware:i
 	else
@@ -75,7 +76,7 @@ function loadFirmware {
 }
 
 function loadBootloader {
-	cd $FILESDIR
+	cd ../Files
         echo Please make sure that the programmmer AVRISPmkII is connected!
 	echo SETTING THE CHIP FUSES...
 	sudo avrdude -c avrispmkII -p m2560 -P usb -u -U lfuse:w:0xFF:m -U hfuse:w:0xD8:m -U efuse:w:0xFD:m -v	
