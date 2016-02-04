@@ -1,0 +1,67 @@
+minimum voltage is: 0.877192982456
+// Thermistor lookup table for RepRap Temperature Sensor Boards (http://make.rrrf.org/ts)
+// Made with createTemperatureLookup.py (http://svn.reprap.org/trunk/reprap/firmware/Arduino/utilities/createTemperature
+Lookup.py)
+// ./createTemperatureLookup.py --r0=100000 --t0=25 --r1=0 --r2=4700 --rseries=1000 --beta=3950 --num-temps=60 --max-adc
+=1023 --marlin=False
+// r0: 100000
+// t0: 25
+// r1: 0
+// r2: 4700
+// rseries: 1000
+// beta: 3950
+// max adc: 1023
+// marlin: False
+#define NUMTEMPS 61
+short temptable[NUMTEMPS][2] = {
+   {188*OVERSAMPLENR, 410},
+   {205*OVERSAMPLENR, 298},
+   {222*OVERSAMPLENR, 257},
+   {239*OVERSAMPLENR, 233},
+   {256*OVERSAMPLENR, 216},
+   {273*OVERSAMPLENR, 202},
+   {290*OVERSAMPLENR, 192},
+   {307*OVERSAMPLENR, 183},
+   {324*OVERSAMPLENR, 175},
+   {341*OVERSAMPLENR, 168},
+   {358*OVERSAMPLENR, 162},
+   {375*OVERSAMPLENR, 156},
+   {392*OVERSAMPLENR, 151},
+   {409*OVERSAMPLENR, 147},
+   {426*OVERSAMPLENR, 142},
+   {443*OVERSAMPLENR, 138},
+   {460*OVERSAMPLENR, 134},
+   {477*OVERSAMPLENR, 130},
+   {494*OVERSAMPLENR, 127},
+   {511*OVERSAMPLENR, 123},
+   {528*OVERSAMPLENR, 120},
+   {545*OVERSAMPLENR, 117},
+   {562*OVERSAMPLENR, 114},
+   {579*OVERSAMPLENR, 111},
+   {596*OVERSAMPLENR, 108},
+   {613*OVERSAMPLENR, 105},
+   {630*OVERSAMPLENR, 102},
+   {647*OVERSAMPLENR, 99},
+   {664*OVERSAMPLENR, 96},
+   {681*OVERSAMPLENR, 93},
+   {698*OVERSAMPLENR, 90},
+   {715*OVERSAMPLENR, 88},
+   {732*OVERSAMPLENR, 85},
+   {749*OVERSAMPLENR, 82},
+   {766*OVERSAMPLENR, 79},
+   {783*OVERSAMPLENR, 76},
+   {800*OVERSAMPLENR, 73},
+   {817*OVERSAMPLENR, 70},
+   {834*OVERSAMPLENR, 66},
+   {851*OVERSAMPLENR, 63},
+   {868*OVERSAMPLENR, 59},
+   {885*OVERSAMPLENR, 55},
+   {902*OVERSAMPLENR, 51},
+   {919*OVERSAMPLENR, 47},
+   {936*OVERSAMPLENR, 41},
+   {953*OVERSAMPLENR, 36},
+   {970*OVERSAMPLENR, 29},
+   {987*OVERSAMPLENR, 20},
+   {1004*OVERSAMPLENR, 6},
+   {1021*OVERSAMPLENR, -26}
+};
