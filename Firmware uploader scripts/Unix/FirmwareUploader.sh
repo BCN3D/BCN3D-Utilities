@@ -12,7 +12,16 @@ DIR=~/bcn3d-utilities/Firmware\ uploader\ scripts/Unix/
 PACKAGES=(flex byacc bison gcc libusb-dev avr-libc avrdude setserial)
 BOOTLOADER=BCN3D-stk500boot.hex
 FIRMWARES = ""
+STATUS = false
 #User functions
+function checkInternet {
+	wget -q --tries=5 --timeout=20 --spider http://google.com
+	if [[ $? -eq 0 ]]; then
+        	STATUS=true 
+		echo "ONLINE"
+	fi
+}
+
 function start {
 	#Look for needed packages
 	for i in ${PACKAGES[*]}; do
@@ -116,7 +125,10 @@ done
 
 
 clear
-start
+checkInternet
+if [[ "$STATUS" == "true" ]]; then 
+	start
+fi
 #List the available firmwares and select it
 listFirmwares
 echo -------------------------------------------------------------
