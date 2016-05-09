@@ -45,7 +45,7 @@ mode | findstr "COM*"
 SET /P comPort=Please select the com port of the Board: 
 echo.
 echo UPLOADING THE FIRMWARE...
-avrdude -p m2560 -c avrispmkII -P com%comPort% -D -U flash:w:Marlin.hex
+avrdude -p m2560 -c avrispmkII -P com%comPort% -D -U flash:w:../Files/BCN3D_Sigma_Firmware_latest.hex
 ::avrdude -p m2560 -c avrispmkII -P com%comPort% -U eeprom:w:Marlin.eep
 echo.
 PAUSE
