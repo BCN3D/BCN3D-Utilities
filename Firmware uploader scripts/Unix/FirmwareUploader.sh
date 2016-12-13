@@ -6,7 +6,7 @@
 #Marc Cobler Cosmen - October 2015
 
 #Variables
-OPTIONS="Bootloader Firmware Everything Exit"
+OPTIONS="Bootloader Firmware Everything Update Exit"
 FILESDIR=~/bcn3d-utilities/Firmware\ uploader\ scripts/Files
 DIR=~/bcn3d-utilities/Firmware\ uploader\ scripts/Unix/
 PACKAGES=(flex byacc bison gcc libusb-dev avr-libc avrdude setserial)
@@ -17,62 +17,72 @@ STATUS = false
 function checkInternet {
 	wget -q --tries=5 --timeout=20 --spider http://google.com
 	if [[ $? -eq 0 ]]; then
-        	STATUS=true 
-		echo "ONLINE"
+    STATUS=true
+		printf "System is ONLINE \n\n"
 	fi
 }
 
-function start {
+function checkInstalledPackages {
 	#Look for needed packages
 	for i in ${PACKAGES[*]}; do
-		if dpkg-query -W $i; then
-			echo You have already $i installed
+		if dpkg-query --show $i; then
+			printf "You have already $i installed \n\n"
 		else
-			echo You don\'t have $i installed
-			echo -e Do you want to "install" it? "[y/n]"
+			printf "You don\'t have $i installed \n\n"
+			printf "Do you want to "install" it? "[y/n]""
 			read INSTALL
 			if [ $INSTALL == "y" ]; then
-				echo `sudo apt-get install $i`
+				sudo apt-get install $i
 			else
-				echo Program will not work properly. Please "install" the packages
-			fi	
+				printf "Program will not work properly. Please install the packages"
+			fi
 		fi
 	done
+	#clear
+}
+
+function updateGithub {
+	#Update the repository from github
 	#Pull from github the new changes
-	echo -e Do you want to download updates from Github? "[y/n]"
+	printf "Do you want to download updates from Github? "[y/n]""
 	read UPDATES
 	if [ $UPDATES == "y" ]; then
-		git pull
+		if [[ $STATUS == "true" ]]; then
+			#connected to the internet
+			git pull
+		else
+			#No internet
+			printf "There's no internet connection...! \n Canceling sync"
+		fi
 	fi
-	clear
 }
 
 function listFirmwares {
 	FIRMWARES="$(ls ../Files | grep "Sigma*")"
-	echo -e "Which firmware do you want to upload?"
-	echo -e " Remember if you want to change the firmware you have to reboot script"
+	printf "Which firmware do you want to upload? \n"
+	printf "Remember if you want to change the firmware you have to reboot script \n"
 	#Let's print the options and select them
 	select firmware in $FIRMWARES; do
-		echo -e The selected Firmware is: $firmware
+		printf "The selected Firmware is: $firmware \n"
 		break
 	done
 }
 
 function comPorts {
 	if [[ $(ls -lA /dev/ | grep ttyUSB*) ]]; then
-		echo These are the COM Ports available:
+		printf "These are the COM Ports available:"
 		ls -lA /dev/ | grep ttyUSB*
-		echo -e "Select your COM Port: [Number]"
+		printf "Select your COM Port: [Number]"
 		read COMPORT
-		
+
 	else
-		echo There is no Board connected. Please verify and reconnect.
+		printf "There is no Board connected. Please verify and reconnect."
 		menu
 	fi
 }
 
 function loadFirmware {
-        echo Uploading the firmware...
+  printf "Uploading the firmware..."
 	cd ../Files
 	if [ $1 -eq 0 ]; then
 		avrdude -p m2560 -c avrispmkII -P /dev/ttyUSB$1 -D -U flash:w:$firmware:i
@@ -86,57 +96,61 @@ function loadFirmware {
 
 function loadBootloader {
 	cd ../Files
-        echo Please make sure that the programmmer AVRISPmkII is connected!
-	echo SETTING THE CHIP FUSES...
-	sudo avrdude -c avrispmkII -p m2560 -P usb -u -U lfuse:w:0xFF:m -U hfuse:w:0xD8:m -U efuse:w:0xFD:m -v	
-	echo BURNING THE BOOTLOADER...
-	sudo avrdude -c avrispmkII -p m2560 -P usb -u -U flash:w:$BOOTLOADER:i
+  printf "Please make sure that the programmmer is connected! \n\n"
+	printf "SETTING THE CHIP FUSES... \n"
+	avrdude -c avrispmkII -p m2560 -P usb -u -U lfuse:w:0xFF:m -U hfuse:w:0xD8:m -U efuse:w:0xFD:m -v
+	printf "BURNING THE BOOTLOADER... \n"
+	avrdude -c avrispmkII -p m2560 -P usb -u -U flash:w:$BOOTLOADER:i
 	#return to menu
 	menu
-} 
+}
 
 function menu {
-	echo -e "\n"
+	printf "\n"
 	#we're going to run a Select to make a simple menu
 	select opt in $OPTIONS; do
 		if [ "$opt" = "Firmware" ]; then
-			echo F detected, Firmware it is!
+			printf "Firmware it is! \n"
 			#Now we're going to load the firmware
 			loadFirmware
 			sleep 2
 		elif [ "$opt" = "Bootloader" ]; then
-			echo B detected, Bootloader it is!
+			printf "Bootloader it is! \n"
 			#Now we're going to load the Bootloader
 			loadBootloader
 			sleep 2
 		elif [ "$opt" = "Exit" ]; then
-			echo Bye! see you soon
+			printf "Bye! see you soon \n\n"
 			sleep 1
+			clear
 			exit
 		elif [ "$opt" = "Everything" ]; then
 			loadBootloader
 			loadFirmware 0
 			menu
+		elif [ "$opt" = "Update" ]; then
+			#Update the Github Repository. Only if there's internet
+			updateGithub
+			menu
 		else
-			echo Please, enter a valid option! Select the numbers
+			printf "Please, enter a valid option! \n"
 		fi
 done
 }
 
-
+#----------------------------------------------------------------
+#										MAIN LOOP
+#----------------------------------------------------------------
 clear
+printf "============================================================"
+printf "\n\n"
+printf "FIRMWARE UPLOADER FOR BCN3D ELECTRONICS"
+printf "\n\n"
+printf "============================================================"
+printf "\n"
 checkInternet
-if [[ "$STATUS" == "true" ]]; then 
-	start
-fi
+checkInstalledPackages
 #List the available firmwares and select it
 listFirmwares
-echo -------------------------------------------------------------
-echo -e "\n"
-echo FIRMWARE UPLOADER FOR BCN3D ELECTRONICS
-echo -e "\n"
-echo ------------------------------------------------------------
-echo -e "\n"
 #show the menu
 menu
-
