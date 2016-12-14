@@ -1,0 +1,8 @@
+flex
+byacc
+bison
+gcc
+libusb-dev
+avr-libc
+avrdude
+setserial

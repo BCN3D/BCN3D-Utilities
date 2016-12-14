@@ -9,10 +9,12 @@
 OPTIONS="Bootloader Firmware Everything Update Exit"
 FILESDIR=~/bcn3d-utilities/Firmware\ uploader\ scripts/Files
 DIR=~/bcn3d-utilities/Firmware\ uploader\ scripts/Unix/
-PACKAGES=(flex byacc bison gcc libusb-dev avr-libc avrdude setserial)
-BOOTLOADER=BCN3D-stk500boot.hex
+#File where the packages needed are listed
+PACKAGES="./Packages.list"
+BOOTLOADER="BCN3D-stk500boot.hex"
 FIRMWARES = ""
 STATUS = false
+
 #User functions
 function checkInternet {
 	wget -q --tries=5 --timeout=20 --spider http://google.com
@@ -23,22 +25,22 @@ function checkInternet {
 }
 
 function checkInstalledPackages {
-	#Look for needed packages
-	for i in ${PACKAGES[*]}; do
-		if dpkg-query --show $i; then
-			printf "You have already $i installed \n\n"
-		else
-			printf "You don\'t have $i installed \n\n"
+	#Look for needed packages and install them if needed
+	while IFS= read -r package
+	do
+		if dpkg-query --show $package; then
+			printf "You have already $package installed \n\n"
+	 	else
+			printf "You don\'t have $package installed \n\n"
 			printf "Do you want to "install" it? "[y/n]""
 			read INSTALL
 			if [ $INSTALL == "y" ]; then
-				sudo apt-get install $i
-			else
+				sudo apt-get -qq -y install $package
+		 	else
 				printf "Program will not work properly. Please install the packages"
-			fi
-		fi
-	done
-	#clear
+		 	fi
+	 fi
+	done < "$PACKAGES"
 }
 
 function updateGithub {
@@ -60,7 +62,7 @@ function updateGithub {
 function listFirmwares {
 	FIRMWARES="$(ls ../Files | grep "Sigma*")"
 	printf "Which firmware do you want to upload? \n"
-	printf "Remember if you want to change the firmware you have to reboot script \n"
+	printf "Remember if you want to change the firmware you have to reboot script \n\n"
 	#Let's print the options and select them
 	select firmware in $FIRMWARES; do
 		printf "The selected Firmware is: $firmware \n"
@@ -70,9 +72,9 @@ function listFirmwares {
 
 function comPorts {
 	if [[ $(ls -lA /dev/ | grep ttyUSB*) ]]; then
-		printf "These are the COM Ports available:"
+		printf "These are the COM Ports available: \n"
 		ls -lA /dev/ | grep ttyUSB*
-		printf "Select your COM Port: [Number]"
+		printf "Select your COM Port: [Number] \n"
 		read COMPORT
 
 	else
@@ -105,8 +107,18 @@ function loadBootloader {
 	menu
 }
 
-function menu {
+function printHeader {
+	printf "============================================================"
+	printf "\n\n"
+	printf "FIRMWARE UPLOADER FOR BCN3D ELECTRONICS"
+	printf "\n\n"
+	printf "============================================================"
 	printf "\n"
+}
+
+function menu {
+	printHeader
+	#printf "\n"
 	#we're going to run a Select to make a simple menu
 	select opt in $OPTIONS; do
 		if [ "$opt" = "Firmware" ]; then
@@ -142,12 +154,6 @@ done
 #										MAIN LOOP
 #----------------------------------------------------------------
 clear
-printf "============================================================"
-printf "\n\n"
-printf "FIRMWARE UPLOADER FOR BCN3D ELECTRONICS"
-printf "\n\n"
-printf "============================================================"
-printf "\n"
 checkInternet
 checkInstalledPackages
 #List the available firmwares and select it
