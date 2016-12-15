@@ -27,28 +27,28 @@ function checkInternet {
 
 function checkInstalledPackages {
 	#Look for needed packages and install them if needed
-	while IFS= read -r package
+	while IFS= read -re package
 	do
 		if dpkg-query --show $package; then
 			printf "You have already $package installed \n\n"
 	 	else
 			printf "You don\'t have $package installed \n\n"
-			printf "Do you want to "install" it? "[y/n]""
-			read INSTALL
+			printf "Do you want to "install" it? "
+			read -p "[y/n] : " INSTALL < /dev/tty
 			if [ $INSTALL == "y" ]; then
 				sudo apt-get -qq -y install $package
 		 	else
-				printf "Program will not work properly. Please install the packages"
+				printf "Program will not work properly. Please install the packages \n"
 		 	fi
 	 fi
-	done < "$PACKAGES"
+ done < $PACKAGES
 }
 
 function updateGithub {
 	#Update the repository from github
 	#Pull from github the new changes
-	printf "Do you want to download updates from Github? "[y/n]""
-	read UPDATES
+	printf "Do you want to download updates from Github? "
+	read -p "[y/n] : " UPDATES
 	if [ $UPDATES == "y" ]; then
 		if [[ $STATUS == "true" ]]; then
 			#connected to the internet
@@ -75,8 +75,8 @@ function comPorts {
 	if [[ $(ls -lA /dev/ | grep ttyUSB*) ]]; then
 		printf "These are the COM Ports available: \n"
 		ls -lA /dev/ | grep ttyUSB*
-		printf "Select your COM Port: [Number] \n"
-		read COMPORT
+		printf "Select your COM Port: "
+		read -p "[Number] : " COMPORT
 
 	else
 		printf "There is no Board connected. Please verify and reconnect."
