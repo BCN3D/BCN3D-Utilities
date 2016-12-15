@@ -12,8 +12,9 @@ DIR=~/bcn3d-utilities/Firmware\ uploader\ scripts/Unix/
 #File where the packages needed are listed
 PACKAGES="./Packages.list"
 BOOTLOADER="BCN3D-stk500boot.hex"
-FIRMWARES = ""
-STATUS = false
+FIRMWARES=""
+STATUS=false
+defaultComPort=0
 
 #User functions
 function checkInternet {
@@ -86,25 +87,24 @@ function comPorts {
 function loadFirmware {
   printf "Uploading the firmware..."
 	cd ../Files
-	if [ $1 -eq 0 ]; then
-		avrdude -p m2560 -c avrispmkII -P /dev/ttyUSB$1 -D -U flash:w:$firmware:i
-	else
+	#check if parameter 1 is zero length. Then select the com port
+	if [ -z "$1" ]; then
 		comPorts
-		avrdude -p m2560 -c avrispmkII -P /dev/ttyUSB$COMPORT -D -U flash:w:$firmware:i
+		sudo avrdude -p m2560 -c avrispmkII -P /dev/ttyUSB$COMPORT -D -U flash:w:$firmware:i
+	else #The comport is passed by default as 0
+		printf "USING DEFAULT COMPORT "
+		printf "%s\n" "$1"
+		sudo avrdude -p m2560 -c avrispmkII -P /dev/ttyUSB$1 -D -U flash:w:$firmware:i
 	fi
-	#return to menu
-	menu
 }
 
 function loadBootloader {
 	cd ../Files
-  printf "Please make sure that the programmmer is connected! \n\n"
+	printf "Please make sure that the programmmer is connected! \n\n"
 	printf "SETTING THE CHIP FUSES... \n"
-	avrdude -c avrispmkII -p m2560 -P usb -u -U lfuse:w:0xFF:m -U hfuse:w:0xD8:m -U efuse:w:0xFD:m -v
+	sudo avrdude -c avrispmkII -p m2560 -P usb -u -U lfuse:w:0xFF:m -U hfuse:w:0xD8:m -U efuse:w:0xFD:m -v
 	printf "BURNING THE BOOTLOADER... \n"
-	avrdude -c avrispmkII -p m2560 -P usb -u -U flash:w:$BOOTLOADER:i
-	#return to menu
-	menu
+	sudo avrdude -c avrispmkII -p m2560 -P usb -u -U flash:w:$BOOTLOADER:i
 }
 
 function printHeader {
@@ -126,11 +126,13 @@ function menu {
 			#Now we're going to load the firmware
 			loadFirmware
 			sleep 2
+			menu
 		elif [ "$opt" = "Bootloader" ]; then
 			printf "Bootloader it is! \n"
 			#Now we're going to load the Bootloader
 			loadBootloader
 			sleep 2
+			menu
 		elif [ "$opt" = "Exit" ]; then
 			printf "Bye! see you soon \n\n"
 			sleep 1
@@ -138,7 +140,8 @@ function menu {
 			exit
 		elif [ "$opt" = "Everything" ]; then
 			loadBootloader
-			loadFirmware 0
+			sleep 2
+			loadFirmware $defaultComPort
 			menu
 		elif [ "$opt" = "Update" ]; then
 			#Update the Github Repository. Only if there's internet
