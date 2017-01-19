@@ -6,7 +6,7 @@
 #Marc Cobler Cosmen - October 2015
 
 #Variables
-OPTIONS="Bootloader Firmware Everything Update Exit"
+OPTIONS="Bootloader Firmware Everything Update TestCommunication Exit"
 FILESDIR=~/bcn3d-utilities/Firmware\ uploader\ scripts/Files
 DIR=~/bcn3d-utilities/Firmware\ uploader\ scripts/Unix/
 #File where the packages needed are listed
@@ -107,6 +107,10 @@ function loadBootloader {
 	sudo avrdude -c avrispmkII -p m2560 -P usb -u -U flash:w:$BOOTLOADER:i
 }
 
+function testCommunication {
+	sudo avrdude -c avrispmkII -p m2560 -P usb -vvvv
+}
+
 function printHeader {
 	printf "============================================================"
 	printf "\n\n"
@@ -146,6 +150,10 @@ function menu {
 		elif [ "$opt" = "Update" ]; then
 			#Update the Github Repository. Only if there's internet
 			updateGithub
+			menu
+		elif [ "$opt" = "TestCommunication" ]; then
+			#Test the connection with the programmer and the board
+			testCommunication
 			menu
 		else
 			printf "Please, enter a valid option! \n"
