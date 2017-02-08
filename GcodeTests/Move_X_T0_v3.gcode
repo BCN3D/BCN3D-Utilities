@@ -1,0 +1,170 @@
+;Sliced at: Tue 22-03-2016 17:26:22
+;Basic settings: Layer height: 0.2 Walls: 0.8 Fill: 0
+;Print time: 0 minutes
+;Filament used: 0.016m 0.0g
+;Filament cost: None
+;M190 S50 ;Uncomment to add your own bed temperature line
+;M104 S200 ;Uncomment to add your own temperature line
+;M109 T1 S0 ;Uncomment to add your own temperature line
+;M109 T0 S200 ;Uncomment to add your own temperature line
+
+G21        ;metric values
+G90        ;absolute positioning
+M82        ;set extruder to absolute mode
+M107       ;start with the fan off
+G28 X0 Y0  ;move X/Y to min endstops
+G28 Z0     ;move Z to min endstops
+
+G1 F12000 Z5 X105 Y150
+
+
+G1	F	60	X	106.25
+G1			X	103.75
+G1			X	105
+G1	F	120	X	107.5
+G1			X	102.5
+G1			X	105
+G1	F	180	X	108.75
+G1			X	101.25
+G1			X	105
+G1	F	240	X	110
+G1			X	100
+G1			X	105
+G1	F	300	X	111.25
+G1			X	98.75
+G1			X	105
+G1	F	360	X	112.5
+G1			X	97.5
+G1			X	105
+G1	F	420	X	113.75
+G1			X	96.25
+G1			X	105
+G1	F	480	X	115
+G1			X	95
+G1			X	105
+G1	F	540	X	116.25
+G1			X	93.75
+G1			X	105
+G1	F	600	X	117.5
+G1			X	92.5
+G1			X	105
+G1	F	900	X	123.75
+G1			X	86.25
+G1			X	105
+G1	F	1200	X	130
+G1			X	80
+G1			X	105
+G1	F	1500	X	136.25
+G1			X	73.75
+G1			X	105
+G1	F	1800	X	142.5
+G1			X	67.5
+G1			X	105
+G1	F	2100	X	148.75
+G1			X	61.25
+G1			X	105
+G1	F	2400	X	155
+G1			X	55
+G1			X	105
+G1	F	2700	X	161.25
+G1			X	48.75
+G1			X	105
+G1	F	3000	X	167.5
+G1			X	42.5
+G1			X	105
+G1	F	3300	X	173.75
+G1			X	36.25
+G1			X	105
+G1	F	3600	X	180
+G1			X	30
+G1			X	105
+G1	F	3900	X	186.25
+G1			X	23.75
+G1			X	105
+G1	F	4200	X	192.5
+G1			X	17.5
+G1			X	105
+G1	F	4500	X	198.75
+G1			X	11.25
+G1			X	105
+G1	F	4800	X	205
+G1			X	5
+G1			X	105
+G1	F	5100	X	158.125
+G1			X	51.875
+G1			X	158.125
+G1			X	51.875
+G1			X	105
+G1	F	5400	X	161.25
+G1			X	48.75
+G1			X	161.25
+G1			X	48.75
+G1			X	105
+G1	F	5700	X	164.375
+G1			X	45.625
+G1			X	164.375
+G1			X	45.625
+G1			X	105
+G1	F	6000	X	167.5
+G1			X	42.5
+G1			X	167.5
+G1			X	42.5
+G1			X	105
+G1	F	6600	X	173.75
+G1			X	36.25
+G1			X	173.75
+G1			X	36.25
+G1			X	105
+G1	F	7200	X	180
+G1			X	30
+G1			X	180
+G1			X	30
+G1			X	105
+G1	F	7800	X	186.25
+G1			X	23.75
+G1			X	186.25
+G1			X	23.75
+G1			X	105
+G1	F	8400	X	192.5
+G1			X	17.5
+G1			X	192.5
+G1			X	17.5
+G1			X	105
+G1	F	9000	X	198.75
+G1			X	11.25
+G1			X	198.75
+G1			X	11.25
+G1			X	105
+G1	F	9600	X	205
+G1			X	5
+G1			X	205
+G1			X	5
+G1			X	105
+G1	F	10200	X	175.8333333
+G1			X	34.16666667
+G1			X	175.8333333
+G1			X	34.16666667
+G1			X	175.8333333
+G1			X	34.16666667
+G1			X	105
+G1	F	10800	X	180
+G1			X	30
+G1			X	180
+G1			X	30
+G1			X	180
+G1			X	30
+G1			X	105
+G1	F	11400	X	184.1666667
+G1			X	25.83333333
+G1			X	184.1666667
+G1			X	25.83333333
+G1			X	184.1666667
+G1			X	25.83333333
+G1			X	105
+G1	F	12000	X	188.3333333
+G1			X	21.66666667
+G1			X	188.3333333
+G1			X	21.66666667
+G1			X	188.3333333
+G1			X	21.66666667
+G1			X	105
