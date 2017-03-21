@@ -530,20 +530,23 @@ uint32_t count = 0;
 void (*app_start)(void) = 0x0000;
 
 void init_ports(void){
-	DDRJ = 0x00001000; //// X0 step PJ3
-	PORTJ= 0b00000000;
+	DDRJ = 0x00111000;	//// X0 step PJ3 "0" , IEN PJ4 "1", DIR PJ5 "0"
+	PORTJ= 0b00010000;
 	
-	DDRE = 0b00001000; ////	X1 step  PE3
-	PORTE= 0b00000000;
+	DDRE = 0b00111000;	//// X1 step  PE3, IEN PE4 "1", DIR PE5 "0"
+	PORTE= 0b00010000;
 	
-	DDRC = 0b10000000;//// Y step  PC7
-	PORTC= 0b00000000;
+	DDRC = 0b11100000;	//// Y step  PC7, IEN PC6 "1", DIR PC5 "0"
+	PORTC= 0b01000000;
 	
-	DDRA = 0b10001000;//// Z step PA3  E0 step PA7
-	PORTA= 0b00000000;
+	DDRA = 0b11101110;	//// Z step  PA3, IEN PA2 "1", DIR PA1 "0"  & E0 step PA7, IEN PA6 "1", DIR PA5 "0"
+	PORTA= 0b01000100;
 	
-	DDRF = 0b00001000;//// E1 step PF3
-	PORTF= 0b00000000;
+	DDRF = 0b00001110;	//// E1 step  PF3, IEN PF2 "1", DIR PF1 "0"
+	PORTF= 0b00000100;
+	
+	DDRB = 0x00010000;	//// Relay "0"
+	PORTB= 0b00000000;
 }
 //*****************************************************************************
 int main(void)
