@@ -134,7 +134,7 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a
 .rela.plt
  *(.rela.plt)
 
-.text           0x0003e000     0x1d6c
+.text           0x0003e000     0x1d90
  *(.vectors)
  .vectors       0x0003e000       0xe4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
                 0x0003e000                __vectors
@@ -292,45 +292,46 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a
                 0x0003e364                __vector_18
                 0x0003e364                __vector_20
                 0x0003e364                __vector_42
- .text          0x0003e368     0x1942 stk500boot.o
-                0x0003e384                PrintFromPROGMEM
-                0x0003e3f4                PrintString
-                0x0003e3ea                PrintFromPROGMEMln
-                0x0003e468                PrintDecInt
-                0x0003e6c0                main
+ .text          0x0003e368     0x1966 stk500boot.o
+                0x0003e384                init_ports
+                0x0003e3a4                PrintFromPROGMEM
+                0x0003e414                PrintString
+                0x0003e40a                PrintFromPROGMEMln
+                0x0003e488                PrintDecInt
+                0x0003e6e0                main
                 0x0003e368                delay_ms
-                0x0003e41a                PrintHexByte
-                0x0003e3b8                PrintNewLine
- .text          0x0003fcaa        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_divmodhi4.o)
- .text          0x0003fcaa        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodsi4.o)
- .text          0x0003fcaa        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_exit.o)
- .text          0x0003fcaa        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_clear_bss.o)
- .text          0x0003fcaa        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodhi4.o)
- .text          0x0003fcaa        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(eerd_byte_atmega2560.o)
- .text          0x0003fcaa        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(eewr_byte_atmega2560.o)
-                0x0003fcaa                . = ALIGN (0x2)
+                0x0003e43a                PrintHexByte
+                0x0003e3d8                PrintNewLine
+ .text          0x0003fcce        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_divmodhi4.o)
+ .text          0x0003fcce        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodsi4.o)
+ .text          0x0003fcce        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_exit.o)
+ .text          0x0003fcce        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_clear_bss.o)
+ .text          0x0003fcce        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodhi4.o)
+ .text          0x0003fcce        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(eerd_byte_atmega2560.o)
+ .text          0x0003fcce        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(eewr_byte_atmega2560.o)
+                0x0003fcce                . = ALIGN (0x2)
  *(.text.*)
- .text.libgcc   0x0003fcaa       0x26 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_divmodhi4.o)
-                0x0003fcaa                __divmodhi4
-                0x0003fcaa                _div
- .text.libgcc   0x0003fcd0       0x44 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodsi4.o)
-                0x0003fcd0                __udivmodsi4
- .text.libgcc   0x0003fd14        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_exit.o)
- .text.libgcc   0x0003fd14        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_clear_bss.o)
- .text.libgcc   0x0003fd14       0x28 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodhi4.o)
-                0x0003fd14                __udivmodhi4
+ .text.libgcc   0x0003fcce       0x26 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_divmodhi4.o)
+                0x0003fcce                __divmodhi4
+                0x0003fcce                _div
+ .text.libgcc   0x0003fcf4       0x44 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodsi4.o)
+                0x0003fcf4                __udivmodsi4
+ .text.libgcc   0x0003fd38        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_exit.o)
+ .text.libgcc   0x0003fd38        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_clear_bss.o)
+ .text.libgcc   0x0003fd38       0x28 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_udivmodhi4.o)
+                0x0003fd38                __udivmodhi4
  .text.avr-libc
-                0x0003fd3c       0x10 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(eerd_byte_atmega2560.o)
-                0x0003fd3c                __eerd_byte_m2560
+                0x0003fd60       0x10 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(eerd_byte_atmega2560.o)
+                0x0003fd60                __eerd_byte_m2560
  .text.avr-libc
-                0x0003fd4c       0x1c c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(eewr_byte_atmega2560.o)
-                0x0003fd4e                __eewr_r18_m2560
-                0x0003fd4c                __eewr_byte_m2560
-                0x0003fd68                . = ALIGN (0x2)
+                0x0003fd70       0x1c c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6\libc.a(eewr_byte_atmega2560.o)
+                0x0003fd72                __eewr_r18_m2560
+                0x0003fd70                __eewr_byte_m2560
+                0x0003fd8c                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x0003fd68        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_exit.o)
-                0x0003fd68                exit
-                0x0003fd68                _exit
+ .fini9         0x0003fd8c        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_exit.o)
+                0x0003fd8c                exit
+                0x0003fd8c                _exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -349,11 +350,11 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x0003fd68        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_exit.o)
+ .fini0         0x0003fd8c        0x4 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a(_exit.o)
  *(.fini0)
-                0x0003fd6c                _etext = .
+                0x0003fd90                _etext = .
 
-.data           0x00800200        0x0 load address 0x0003fd6c
+.data           0x00800200        0x0 load address 0x0003fd90
                 0x00800200                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800200        0x0 c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o
@@ -393,8 +394,8 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a
                 0x00800206                gFlashIndex
                 0x0080020a                gRamIndex
                 0x0080020e                PROVIDE (__bss_end, .)
-                0x0003fd6c                __data_load_start = LOADADDR (.data)
-                0x0003fd6c                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x0003fd90                __data_load_start = LOADADDR (.data)
+                0x0003fd90                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x0080020e        0x0
                 0x0080020e                PROVIDE (__noinit_start, .)
@@ -458,32 +459,32 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a
                 0x00000000       0x28 stk500boot.o
 
 .debug_pubnames
-                0x00000000      0x4d2
+                0x00000000      0x4e1
  *(.debug_pubnames)
  .debug_pubnames
-                0x00000000      0x4d2 stk500boot.o
+                0x00000000      0x4e1 stk500boot.o
 
-.debug_info     0x00000000     0x2060
+.debug_info     0x00000000     0x2075
  *(.debug_info)
- .debug_info    0x00000000     0x2060 stk500boot.o
+ .debug_info    0x00000000     0x2075 stk500boot.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev   0x00000000      0x2de
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x2de stk500boot.o
 
-.debug_line     0x00000000     0x1672
+.debug_line     0x00000000     0x16da
  *(.debug_line)
- .debug_line    0x00000000     0x1672 stk500boot.o
+ .debug_line    0x00000000     0x16da stk500boot.o
 
-.debug_frame    0x00000000       0xc0
+.debug_frame    0x00000000       0xd0
  *(.debug_frame)
- .debug_frame   0x00000000       0xc0 stk500boot.o
+ .debug_frame   0x00000000       0xd0 stk500boot.o
 
-.debug_str      0x00000000      0x812
+.debug_str      0x00000000      0x815
  *(.debug_str)
- .debug_str     0x00000000      0x812 stk500boot.o
-                                0x862 (size before relaxing)
+ .debug_str     0x00000000      0x815 stk500boot.o
+                                0x865 (size before relaxing)
 
 .debug_loc      0x00000000     0x19bd
  *(.debug_loc)
@@ -494,8 +495,8 @@ LOAD c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr6\libgcc.a
 OUTPUT(stk500boot.elf elf32-avr)
 LOAD linker stubs
 
-.debug_ranges   0x00000000      0x140
- .debug_ranges  0x00000000      0x140 stk500boot.o
+.debug_ranges   0x00000000      0x148
+ .debug_ranges  0x00000000      0x148 stk500boot.o
 
 Cross Reference Table
 
@@ -639,5 +640,6 @@ gTextMsg_WriteToEEprom                            stk500boot.o
 gTextMsg_jmp                                      stk500boot.o
 gTextMsg_noVector                                 stk500boot.o
 gTextMsg_rjmp                                     stk500boot.o
+init_ports                                        stk500boot.o
 main                                              stk500boot.o
                                                   c:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr6/crtm2560.o

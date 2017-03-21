@@ -529,10 +529,26 @@ uint32_t count = 0;
 //*	for watch dog timer startup
 void (*app_start)(void) = 0x0000;
 
-
+void init_ports(void){
+	DDRJ = 0x00001000; //// X0 step PJ3
+	PORTJ= 0b00000000;
+	
+	DDRE = 0b00001000; ////	X1 step  PE3
+	PORTE= 0b00000000;
+	
+	DDRC = 0b10000000;//// Y step  PC7
+	PORTC= 0b00000000;
+	
+	DDRA = 0b10001000;//// Z step PA3  E0 step PA7
+	PORTA= 0b00000000;
+	
+	DDRF = 0b00001000;//// E1 step PF3
+	PORTF= 0b00000000;
+}
 //*****************************************************************************
 int main(void)
 {
+	init_ports();
 	address_t		address			=	0;
 	address_t		eraseAddress	=	0;
 	unsigned char	msgParseState;
@@ -640,6 +656,8 @@ int main(void)
 
 	delay_ms(100);
 #endif
+
+	
 
 	while (boot_state==0)
 	{
