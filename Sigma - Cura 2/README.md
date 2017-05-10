@@ -1,7 +1,8 @@
 ## BCN3D Sigma files for Cura 2
 
 Files to load properly the Sigma 3D Printer by BCN3D Technologies to Cura 2.
-While we are working on it you can download them here: [goo.gl/BKDE3l](goo.gl/BKDE3l)
+
+While we are working on it you can download them here: [goo.gl/BKDE3l](http://goo.gl/BKDE3l)
 
 #### Configuration
 
