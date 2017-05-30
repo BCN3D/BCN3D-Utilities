@@ -2,7 +2,10 @@
 
 Files to load properly the Sigma 3D Printer by BCN3D Technologies to Cura 2.
 
-While we are working on it you can download them here: [goo.gl/BKDE3l](http://goo.gl/BKDE3l)
+While we are working on it you can download them here:
+ 
+ * [Cura 2.6](http://goo.gl/BKDE3l)
+ * [Cura 2.5](https://goo.gl/Qb3BcJ)
 
 #### Configuration
 
@@ -11,5 +14,5 @@ While we are working on it you can download them here: [goo.gl/BKDE3l](http://go
  2. Restart Cura 2
 
 ##### Windows:
- 1. **Combine** all folders inside *Windows* with the ones inside *C:/Program Files/Cura 2.5*
+ 1. **Combine** all folders inside *Windows* with the ones inside *C:/Program Files/Cura 2.x*
  2. Restart Cura 2
