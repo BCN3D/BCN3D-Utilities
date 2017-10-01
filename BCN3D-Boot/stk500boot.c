@@ -532,7 +532,7 @@ void (*app_start)(void) = 0x0000;
 void init_ports(void){
 	
 	PORTJ= 0b00010000;
-	DDRJ = 0x00111000;	//// X0 step PJ3 "0" , IEN PJ4 "1", DIR PJ5 "0"
+	DDRJ = 0b00111000;	//// X0 step PJ3 "0" , IEN PJ4 "1", DIR PJ5 "0"
 	
 	PORTE= 0b00010000;
 	DDRE = 0b00111000;	//// X1 step  PE3, IEN PE4 "1", DIR PE5 "0"
@@ -547,7 +547,7 @@ void init_ports(void){
 	DDRF = 0b00001110;	//// E1 step  PF3, IEN PF2 "1", DIR PF1 "0"
 	
 	PORTB= 0b00000000;
-	DDRB = 0x00010000;	//// Relay "0"
+	DDRB = 0b00010000;	//// Relay "0"
 }
 //*****************************************************************************
 int main(void)
