@@ -132,7 +132,7 @@ Disassembly of section .text:
    3e1a8:	4c 6f 63 6b 20 66 75 73 65 20 20 20 3d 20 00        Lock fuse   = .
 
 0003e1b7 <gTextMsg_GCC_DATE_STR>:
-   3e1b7:	4d 61 72 20 32 31 20 32 30 31 37 00                 Mar 21 2017.
+   3e1b7:	53 65 70 20 32 32 20 32 30 31 37 00                 Sep 22 2017.
 
 0003e1c3 <gTextMsg_AVR_LIBC_VER_STR>:
    3e1c3:	31 2e 36 2e 37 00                                   1.6.7.
@@ -334,14 +334,14 @@ _delay_loop_2(uint16_t __count)
 void (*app_start)(void) = 0x0000;
 
 void init_ports(void){
-	DDRJ = 0x00111000;	//// X0 step PJ3 "0" , IEN PJ4 "1", DIR PJ5 "0"
-   3e384:	10 92 04 01 	sts	0x0104, r1
+	DDRJ = 0b00111000;	//// X0 step PJ3 "0" , IEN PJ4 "1", DIR PJ5 "0"
+   3e384:	88 e3       	ldi	r24, 0x38	; 56
+   3e386:	80 93 04 01 	sts	0x0104, r24
 	PORTJ= 0b00010000;
-   3e388:	90 e1       	ldi	r25, 0x10	; 16
-   3e38a:	90 93 05 01 	sts	0x0105, r25
+   3e38a:	90 e1       	ldi	r25, 0x10	; 16
+   3e38c:	90 93 05 01 	sts	0x0105, r25
 	
 	DDRE = 0b00111000;	//// X1 step  PE3, IEN PE4 "1", DIR PE5 "0"
-   3e38e:	88 e3       	ldi	r24, 0x38	; 56
    3e390:	8d b9       	out	0x0d, r24	; 13
 	PORTE= 0b00010000;
    3e392:	9e b9       	out	0x0e, r25	; 14
@@ -367,8 +367,8 @@ void init_ports(void){
    3e3a8:	84 e0       	ldi	r24, 0x04	; 4
    3e3aa:	81 bb       	out	0x11, r24	; 17
 	
-	DDRB = 0x00010000;	//// Relay "0"
-   3e3ac:	14 b8       	out	0x04, r1	; 4
+	DDRB = 0b00010000;	//// Relay "0"
+   3e3ac:	94 b9       	out	0x04, r25	; 4
 	PORTB= 0b00000000;
    3e3ae:	15 b8       	out	0x05, r1	; 5
 }
@@ -1065,7 +1065,7 @@ static void sendchar(char c)
    3e6ec:	08 95       	ret
 
 0003e6ee <main>:
-	DDRB = 0x00010000;	//// Relay "0"
+	DDRB = 0b00010000;	//// Relay "0"
 	PORTB= 0b00000000;
 }
 //*****************************************************************************
@@ -1233,8 +1233,8 @@ int main(void)
 			if ((boot_timer % _BLINK_LOOP_COUNT_) == 0)
    3e7c0:	c8 01       	movw	r24, r16
    3e7c2:	b7 01       	movw	r22, r14
-   3e7c4:	27 ec       	ldi	r18, 0xC7	; 199
-   3e7c6:	3b e1       	ldi	r19, 0x1B	; 27
+   3e7c4:	21 ef       	ldi	r18, 0xF1	; 241
+   3e7c6:	36 e0       	ldi	r19, 0x06	; 6
    3e7c8:	40 e0       	ldi	r20, 0x00	; 0
    3e7ca:	50 e0       	ldi	r21, 0x00	; 0
    3e7cc:	0f 94 81 fe 	call	0x3fd02	; 0x3fd02 <__udivmodsi4>
@@ -4574,7 +4574,7 @@ static unsigned char recchar(void)
    3f986:	11 96       	adiw	r26, 0x01	; 1
    3f988:	2c 91       	ld	r18, X
    3f98a:	11 97       	sbiw	r26, 0x01	; 1
-	DDRB = 0x00010000;	//// Relay "0"
+	DDRB = 0b00010000;	//// Relay "0"
 	PORTB= 0b00000000;
 }
 //*****************************************************************************
@@ -4806,7 +4806,7 @@ int main(void)
 								*p++	=	(unsigned char)(data >> 8);	//MSB
    3fae2:	11 96       	adiw	r26, 0x01	; 1
    3fae4:	9c 93       	st	X, r25
-	DDRB = 0x00010000;	//// Relay "0"
+	DDRB = 0b00010000;	//// Relay "0"
 	PORTB= 0b00000000;
 }
 //*****************************************************************************
@@ -4847,7 +4847,7 @@ int main(void)
    3fb16:	5b 81       	ldd	r21, Y+3	; 0x03
    3fb18:	c0 52       	subi	r28, 0x20	; 32
    3fb1a:	d1 40       	sbci	r29, 0x01	; 1
-	DDRB = 0x00010000;	//// Relay "0"
+	DDRB = 0b00010000;	//// Relay "0"
 	PORTB= 0b00000000;
 }
 //*****************************************************************************
