@@ -60,13 +60,24 @@ function updateGithub {
 	fi
 }
 
-function listFirmwares {
+function listFirmwaresigma {
 	FIRMWARES="$(ls ../Files | grep "Sigma*")"
-	printf "Which firmware do you want to upload? \n"
+	printf "Which firmware Sigma do you want to upload? \n"
 	printf "Remember if you want to change the firmware you have to reboot script \n\n"
 	#Let's print the options and select them
 	select firmware in $FIRMWARES; do
 		printf "The selected Firmware is: $firmware \n"
+		break
+	done
+}
+ 
+function listFirmwaresigmax {
+	FIRMWARES="$(ls ../Files | grep "Sigmax*")"
+	printf "Which firmware Sigmax do you want to upload? \n"
+	printf "Remember if you want to change the firmware you have to reboot script \n\n"
+	#Let's print the options and select them
+	select firmwaresigmax in $FIRMWARES; do
+		printf "The selected Firmware is: $firmwaresigmax \n"
 		break
 	done
 }
@@ -98,6 +109,20 @@ function loadFirmware {
 	fi
 }
 
+function loadFirmwareSigmax {
+  printf "Uploading the firmware..."
+	cd ../Files
+	#check if parameter 1 is zero length. Then select the com port
+	if [ -z "$1" ]; then
+		comPorts
+		sudo avrdude -p m2560 -c avrispmkII -P /dev/ttyUSB$COMPORT -D -U flash:w:$firmwaresigmax:i
+	else #The comport is passed by default as 0
+		printf "USING DEFAULT COMPORT "
+		printf "%s\n" "$1"
+		sudo avrdude -p m2560 -c avrispmkII -P /dev/ttyUSB$1 -D -U flash:w:$firmwaresigmax:i
+	fi
+}
+
 function loadBootloader {
 	cd ../Files
 	printf "Please make sure that the programmmer is connected! \n\n"
@@ -125,10 +150,16 @@ function menu {
 	#printf "\n"
 	#we're going to run a Select to make a simple menu
 	select opt in $OPTIONS; do
-		if [ "$opt" = "Firmware" ]; then
-			printf "Firmware it is! \n"
+		if [ "$opt" = "Firmware Sigma" ]; then
+			printf "Firmware Sigma it is! \n"
 			#Now we're going to load the firmware
 			loadFirmware
+			sleep 2
+			menu
+		elif [ "$opt" = "Firmware Sigmax" ]; then
+			printf "Firmware Sigmax it is! \n"
+			#Now we're going to load the firmware
+			loadFirmwareSigmax
 			sleep 2
 			menu
 		elif [ "$opt" = "Bootloader" ]; then
@@ -142,10 +173,15 @@ function menu {
 			sleep 1
 			clear
 			exit
-		elif [ "$opt" = "Everything" ]; then
+		elif [ "$opt" = "Everything Sigma" ]; then
 			loadBootloader
 			sleep 2
 			loadFirmware $defaultComPort
+			menu
+		elif [ "$opt" = "Everything Sigmax" ]; then
+			loadBootloader
+			sleep 2
+			loadFirmwareSigmax $defaultComPort
 			menu
 		elif [ "$opt" = "Update" ]; then
 			#Update the Github Repository. Only if there's internet
@@ -168,6 +204,7 @@ clear
 checkInternet
 checkInstalledPackages
 #List the available firmwares and select it
-listFirmwares
+listFirmwaresigma
+listFirmwaresigmax
 #show the menu
 menu
