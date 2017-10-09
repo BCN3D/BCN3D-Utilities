@@ -6,7 +6,7 @@
 #Marc Cobler Cosmen - October 2015
 
 #Variables
-OPTIONS="Bootloader Firmware Everything Update TestCommunication Exit"
+OPTIONS="Firmware-Sigma Firmware-Sigmax Bootloader Everything-Sigma Everything-Sigmax Update TestCommunication Exit"
 FILESDIR=~/bcn3d-utilities/Firmware\ uploader\ scripts/Files
 DIR=~/bcn3d-utilities/Firmware\ uploader\ scripts/Unix/
 #File where the packages needed are listed
@@ -72,7 +72,7 @@ function listFirmwaresigma {
 }
  
 function listFirmwaresigmax {
-	FIRMWARES="$(ls ../Files | grep "Sigmax*")"
+	FIRMWARES="$(ls ../Files | grep "sigmaX*")"
 	printf "Which firmware Sigmax do you want to upload? \n"
 	printf "Remember if you want to change the firmware you have to reboot script \n\n"
 	#Let's print the options and select them
@@ -150,13 +150,13 @@ function menu {
 	#printf "\n"
 	#we're going to run a Select to make a simple menu
 	select opt in $OPTIONS; do
-		if [ "$opt" = "Firmware Sigma" ]; then
+		if [ "$opt" = "Firmware-Sigma" ]; then
 			printf "Firmware Sigma it is! \n"
 			#Now we're going to load the firmware
 			loadFirmware
 			sleep 2
 			menu
-		elif [ "$opt" = "Firmware Sigmax" ]; then
+		elif [ "$opt" = "Firmware-Sigmax" ]; then
 			printf "Firmware Sigmax it is! \n"
 			#Now we're going to load the firmware
 			loadFirmwareSigmax
@@ -167,18 +167,13 @@ function menu {
 			#Now we're going to load the Bootloader
 			loadBootloader
 			sleep 2
-			menu
-		elif [ "$opt" = "Exit" ]; then
-			printf "Bye! see you soon \n\n"
-			sleep 1
-			clear
-			exit
-		elif [ "$opt" = "Everything Sigma" ]; then
+			menu		
+		elif [ "$opt" = "Everything-Sigma" ]; then
 			loadBootloader
 			sleep 2
 			loadFirmware $defaultComPort
 			menu
-		elif [ "$opt" = "Everything Sigmax" ]; then
+		elif [ "$opt" = "Everything-Sigmax" ]; then
 			loadBootloader
 			sleep 2
 			loadFirmwareSigmax $defaultComPort
@@ -191,6 +186,11 @@ function menu {
 			#Test the connection with the programmer and the board
 			testCommunication
 			menu
+		elif [ "$opt" = "Exit" ]; then
+			printf "Bye! see you soon \n\n"
+			sleep 1
+			clear
+			exit
 		else
 			printf "Please, enter a valid option! \n"
 		fi
