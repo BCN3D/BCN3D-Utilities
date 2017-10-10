@@ -132,7 +132,7 @@ Disassembly of section .text:
    3e1a8:	4c 6f 63 6b 20 66 75 73 65 20 20 20 3d 20 00        Lock fuse   = .
 
 0003e1b7 <gTextMsg_GCC_DATE_STR>:
-   3e1b7:	53 65 70 20 32 32 20 32 30 31 37 00                 Sep 22 2017.
+   3e1b7:	4f 63 74 20 31 30 20 32 30 31 37 00                 Oct 10 2017.
 
 0003e1c3 <gTextMsg_AVR_LIBC_VER_STR>:
    3e1c3:	31 2e 36 2e 37 00                                   1.6.7.
@@ -329,48 +329,48 @@ _delay_loop_2(uint16_t __count)
    3e382:	08 95       	ret
 
 0003e384 <init_ports>:
-
 //*	for watch dog timer startup
 void (*app_start)(void) = 0x0000;
 
 void init_ports(void){
-	DDRJ = 0b00111000;	//// X0 step PJ3 "0" , IEN PJ4 "1", DIR PJ5 "0"
-   3e384:	88 e3       	ldi	r24, 0x38	; 56
-   3e386:	80 93 04 01 	sts	0x0104, r24
+
 	PORTJ= 0b00010000;
-   3e38a:	90 e1       	ldi	r25, 0x10	; 16
-   3e38c:	90 93 05 01 	sts	0x0105, r25
+   3e384:	90 e1       	ldi	r25, 0x10	; 16
+   3e386:	90 93 05 01 	sts	0x0105, r25
+	DDRJ = 0b00111000;	//// X0 step PJ3 "0" , IEN PJ4 "1", DIR PJ5 "0"
+   3e38a:	88 e3       	ldi	r24, 0x38	; 56
+   3e38c:	80 93 04 01 	sts	0x0104, r24
 	
-	DDRE = 0b00111000;	//// X1 step  PE3, IEN PE4 "1", DIR PE5 "0"
-   3e390:	8d b9       	out	0x0d, r24	; 13
 	PORTE= 0b00010000;
-   3e392:	9e b9       	out	0x0e, r25	; 14
+   3e390:	9e b9       	out	0x0e, r25	; 14
+	DDRE = 0b00111000;	//// X1 step  PE3, IEN PE4 "1", DIR PE5 "0"
+   3e392:	8d b9       	out	0x0d, r24	; 13
 	
-	DDRC = 0b11100000;	//// Y step  PC7, IEN PC6 "1", DIR PC5 "0"
-   3e394:	80 ee       	ldi	r24, 0xE0	; 224
-   3e396:	87 b9       	out	0x07, r24	; 7
 	PORTC= 0b01000000;
-   3e398:	80 e4       	ldi	r24, 0x40	; 64
-   3e39a:	88 b9       	out	0x08, r24	; 8
+   3e394:	80 e4       	ldi	r24, 0x40	; 64
+   3e396:	88 b9       	out	0x08, r24	; 8
+	DDRC = 0b11100000;	//// Y step  PC7, IEN PC6 "1", DIR PC5 "0"
+   3e398:	80 ee       	ldi	r24, 0xE0	; 224
+   3e39a:	87 b9       	out	0x07, r24	; 7
 	
-	DDRA = 0b11101110;	//// Z step  PA3, IEN PA2 "1", DIR PA1 "0"  & E0 step PA7, IEN PA6 "1", DIR PA5 "0"
-   3e39c:	8e ee       	ldi	r24, 0xEE	; 238
-   3e39e:	81 b9       	out	0x01, r24	; 1
 	PORTA= 0b01000100;
-   3e3a0:	84 e4       	ldi	r24, 0x44	; 68
-   3e3a2:	82 b9       	out	0x02, r24	; 2
+   3e39c:	84 e4       	ldi	r24, 0x44	; 68
+   3e39e:	82 b9       	out	0x02, r24	; 2
+	DDRA = 0b11101110;	//// Z step  PA3, IEN PA2 "1", DIR PA1 "0"  & E0 step PA7, IEN PA6 "1", DIR PA5 "0"
+   3e3a0:	8e ee       	ldi	r24, 0xEE	; 238
+   3e3a2:	81 b9       	out	0x01, r24	; 1
 	
-	DDRF = 0b00001110;	//// E1 step  PF3, IEN PF2 "1", DIR PF1 "0"
-   3e3a4:	8e e0       	ldi	r24, 0x0E	; 14
-   3e3a6:	80 bb       	out	0x10, r24	; 16
 	PORTF= 0b00000100;
-   3e3a8:	84 e0       	ldi	r24, 0x04	; 4
-   3e3aa:	81 bb       	out	0x11, r24	; 17
+   3e3a4:	84 e0       	ldi	r24, 0x04	; 4
+   3e3a6:	81 bb       	out	0x11, r24	; 17
+	DDRF = 0b00001110;	//// E1 step  PF3, IEN PF2 "1", DIR PF1 "0"
+   3e3a8:	8e e0       	ldi	r24, 0x0E	; 14
+   3e3aa:	80 bb       	out	0x10, r24	; 16
 	
-	DDRB = 0b00010000;	//// Relay "0"
-   3e3ac:	94 b9       	out	0x04, r25	; 4
 	PORTB= 0b00000000;
-   3e3ae:	15 b8       	out	0x05, r1	; 5
+   3e3ac:	15 b8       	out	0x05, r1	; 5
+	DDRB = 0b00010000;	//// Relay "0"
+   3e3ae:	94 b9       	out	0x04, r25	; 4
 }
    3e3b0:	08 95       	ret
 
@@ -1065,8 +1065,8 @@ static void sendchar(char c)
    3e6ec:	08 95       	ret
 
 0003e6ee <main>:
-	DDRB = 0b00010000;	//// Relay "0"
 	PORTB= 0b00000000;
+	DDRB = 0b00010000;	//// Relay "0"
 }
 //*****************************************************************************
 int main(void)
@@ -4574,8 +4574,8 @@ static unsigned char recchar(void)
    3f986:	11 96       	adiw	r26, 0x01	; 1
    3f988:	2c 91       	ld	r18, X
    3f98a:	11 97       	sbiw	r26, 0x01	; 1
-	DDRB = 0b00010000;	//// Relay "0"
 	PORTB= 0b00000000;
+	DDRB = 0b00010000;	//// Relay "0"
 }
 //*****************************************************************************
 int main(void)
@@ -4806,8 +4806,8 @@ int main(void)
 								*p++	=	(unsigned char)(data >> 8);	//MSB
    3fae2:	11 96       	adiw	r26, 0x01	; 1
    3fae4:	9c 93       	st	X, r25
-	DDRB = 0b00010000;	//// Relay "0"
 	PORTB= 0b00000000;
+	DDRB = 0b00010000;	//// Relay "0"
 }
 //*****************************************************************************
 int main(void)
@@ -4847,8 +4847,8 @@ int main(void)
    3fb16:	5b 81       	ldd	r21, Y+3	; 0x03
    3fb18:	c0 52       	subi	r28, 0x20	; 32
    3fb1a:	d1 40       	sbci	r29, 0x01	; 1
-	DDRB = 0b00010000;	//// Relay "0"
 	PORTB= 0b00000000;
+	DDRB = 0b00010000;	//// Relay "0"
 }
 //*****************************************************************************
 int main(void)

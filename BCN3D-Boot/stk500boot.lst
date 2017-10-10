@@ -101,37 +101,37 @@
  113               	/* prologue: function */
  114               	/* frame size = 0 */
  115               	.LM7:
- 116 001c 88E3      		ldi r24,lo8(56)
- 117 001e 8093 0401 		sts 260,r24
+ 116 001c 90E1      		ldi r25,lo8(16)
+ 117 001e 9093 0501 		sts 261,r25
  118               	.LM8:
- 119 0022 90E1      		ldi r25,lo8(16)
- 120 0024 9093 0501 		sts 261,r25
+ 119 0022 88E3      		ldi r24,lo8(56)
+ 120 0024 8093 0401 		sts 260,r24
  121               	.LM9:
- 122 0028 8DB9      		out 45-32,r24
+ 122 0028 9EB9      		out 46-32,r25
  123               	.LM10:
- 124 002a 9EB9      		out 46-32,r25
+ 124 002a 8DB9      		out 45-32,r24
  125               	.LM11:
- 126 002c 80EE      		ldi r24,lo8(-32)
- 127 002e 87B9      		out 39-32,r24
+ 126 002c 80E4      		ldi r24,lo8(64)
+ 127 002e 88B9      		out 40-32,r24
  128               	.LM12:
- 129 0030 80E4      		ldi r24,lo8(64)
- 130 0032 88B9      		out 40-32,r24
+ 129 0030 80EE      		ldi r24,lo8(-32)
+ 130 0032 87B9      		out 39-32,r24
  131               	.LM13:
- 132 0034 8EEE      		ldi r24,lo8(-18)
- 133 0036 81B9      		out 33-32,r24
+ 132 0034 84E4      		ldi r24,lo8(68)
+ 133 0036 82B9      		out 34-32,r24
  134               	.LM14:
- 135 0038 84E4      		ldi r24,lo8(68)
- 136 003a 82B9      		out 34-32,r24
+ 135 0038 8EEE      		ldi r24,lo8(-18)
+ 136 003a 81B9      		out 33-32,r24
  137               	.LM15:
- 138 003c 8EE0      		ldi r24,lo8(14)
- 139 003e 80BB      		out 48-32,r24
+ 138 003c 84E0      		ldi r24,lo8(4)
+ 139 003e 81BB      		out 49-32,r24
  140               	.LM16:
- 141 0040 84E0      		ldi r24,lo8(4)
- 142 0042 81BB      		out 49-32,r24
+ 141 0040 8EE0      		ldi r24,lo8(14)
+ 142 0042 80BB      		out 48-32,r24
  143               	.LM17:
- 144 0044 94B9      		out 36-32,r25
+ 144 0044 15B8      		out 37-32,__zero_reg__
  145               	.LM18:
- 146 0046 15B8      		out 37-32,__zero_reg__
+ 146 0046 94B9      		out 36-32,r25
  147               	/* epilogue start */
  148               	.LM19:
  149 0048 0895      		ret
@@ -158,7 +158,7 @@
  172 0056 2F5F      		subi r18,lo8(-(1))
  173 0058 3F4F      		sbci r19,hi8(-(1))
  174               	/* #APP */
- 175               	 ;  1322 "stk500boot.c" 1
+ 175               	 ;  1323 "stk500boot.c" 1
  176 005a ABBF      		out 59, r26
  177 005c FC01      		movw r30, r24
  178 005e 8791      		elpm r24, Z+
@@ -647,7 +647,7 @@
  675               	.LBB319:
  676               	.LM103:
  677               	/* #APP */
- 678               	 ;  1531 "stk500boot.c" 1
+ 678               	 ;  1532 "stk500boot.c" 1
  679 02c6 0BBF      		out 59, r16
  680 02c8 F701      		movw r30, r14
  681 02ca 7790      		elpm r7, Z+
@@ -816,23 +816,23 @@
  846 03bc 0E94 0000 		call init_ports
  847               	.LM123:
  848               	/* #APP */
- 849               	 ;  576 "stk500boot.c" 1
+ 849               	 ;  577 "stk500boot.c" 1
  850               		.set __stack, 8703
  851               	 ;  0 "" 2
  852               	.LM124:
- 853               	 ;  577 "stk500boot.c" 1
+ 853               	 ;  578 "stk500boot.c" 1
  854 03c0 01E2      		ldi	16, 33
  855               	 ;  0 "" 2
  856               	.LM125:
- 857               	 ;  578 "stk500boot.c" 1
+ 857               	 ;  579 "stk500boot.c" 1
  858 03c2 0EBF      		out 62,16
  859               	 ;  0 "" 2
  860               	.LM126:
- 861               	 ;  579 "stk500boot.c" 1
+ 861               	 ;  580 "stk500boot.c" 1
  862 03c4 0FEF      		ldi	16, 255
  863               	 ;  0 "" 2
  864               	.LM127:
- 865               	 ;  580 "stk500boot.c" 1
+ 865               	 ;  581 "stk500boot.c" 1
  866 03c6 0DBF      		out 61,16
  867               	 ;  0 "" 2
  868               	.LM128:
@@ -841,11 +841,11 @@
  871               	.LVL41:
  872               	.LM129:
  873               	/* #APP */
- 874               	 ;  589 "stk500boot.c" 1
+ 874               	 ;  590 "stk500boot.c" 1
  875 03ca F894      		cli
  876               	 ;  0 "" 2
  877               	.LM130:
- 878               	 ;  590 "stk500boot.c" 1
+ 878               	 ;  591 "stk500boot.c" 1
  879 03cc A895      		wdr
  880               	 ;  0 "" 2
  881               	.LM131:
@@ -859,7 +859,7 @@
  889 03da 1092 6000 		sts 96,__zero_reg__
  890               	.LM134:
  891               	/* #APP */
- 892               	 ;  594 "stk500boot.c" 1
+ 892               	 ;  595 "stk500boot.c" 1
  893 03de 7894      		sei
  894               	 ;  0 "" 2
  895               	.LM135:
@@ -892,7 +892,7 @@
  922 0414 8093 C100 		sts 193,r24
  923               	.LM142:
  924               	/* #APP */
- 925               	 ;  645 "stk500boot.c" 1
+ 925               	 ;  646 "stk500boot.c" 1
  926 0418 0000      		nop
  927               	 ;  0 "" 2
  928               	/* #NOAPP */
@@ -1497,7 +1497,7 @@
  1527 07b0 E0E0      		ldi r30,lo8(0)
  1528 07b2 F0E0      		ldi r31,hi8(0)
  1529               	/* #APP */
- 1530               	 ;  1452 "stk500boot.c" 1
+ 1530               	 ;  1453 "stk500boot.c" 1
  1531 07b4 1093 5700 		sts 87, r17
  1532 07b8 E491      		lpm r30, Z
  1533               		
@@ -1521,7 +1521,7 @@
  1551 07ce E3E0      		ldi r30,lo8(3)
  1552 07d0 F0E0      		ldi r31,hi8(3)
  1553               	/* #APP */
- 1554               	 ;  1457 "stk500boot.c" 1
+ 1554               	 ;  1458 "stk500boot.c" 1
  1555 07d2 1093 5700 		sts 87, r17
  1556 07d6 E491      		lpm r30, Z
  1557               		
@@ -1545,7 +1545,7 @@
  1575 07ec E2E0      		ldi r30,lo8(2)
  1576 07ee F0E0      		ldi r31,hi8(2)
  1577               	/* #APP */
- 1578               	 ;  1462 "stk500boot.c" 1
+ 1578               	 ;  1463 "stk500boot.c" 1
  1579 07f0 1093 5700 		sts 87, r17
  1580 07f4 E491      		lpm r30, Z
  1581               		
@@ -1569,7 +1569,7 @@
  1599 080a E1E0      		ldi r30,lo8(1)
  1600 080c F0E0      		ldi r31,hi8(1)
  1601               	/* #APP */
- 1602               	 ;  1467 "stk500boot.c" 1
+ 1602               	 ;  1468 "stk500boot.c" 1
  1603 080e 1093 5700 		sts 87, r17
  1604 0812 1491      		lpm r17, Z
  1605               		
@@ -1651,7 +1651,7 @@
  1681 0876 A0E0      		ldi r26,lo8(0)
  1682 0878 B0E0      		ldi r27,hi8(0)
  1683               	/* #APP */
- 1684               	 ;  1582 "stk500boot.c" 1
+ 1684               	 ;  1583 "stk500boot.c" 1
  1685 087a ABBF      		out 59, r26
  1686 087c FC01      		movw r30, r24
  1687 087e F790      		elpm r15, Z+
@@ -1746,7 +1746,7 @@
  1776 08f0 A0E0      		ldi r26,lo8(0)
  1777 08f2 B0E0      		ldi r27,hi8(0)
  1778               	/* #APP */
- 1779               	 ;  1607 "stk500boot.c" 1
+ 1779               	 ;  1608 "stk500boot.c" 1
  1780 08f4 ABBF      		out 59, r26
  1781 08f6 FC01      		movw r30, r24
  1782 08f8 E790      		elpm r14, Z+
@@ -2325,7 +2325,7 @@
  2355               	.LBB639:
  2356               	.LM332:
  2357               	/* #APP */
- 2358               	 ;  1691 "stk500boot.c" 1
+ 2358               	 ;  1692 "stk500boot.c" 1
  2359 0ca8 8BBE      		out 59, r8
  2360 0caa F301      		movw r30, r6
  2361 0cac 2791      		elpm r18, Z+
@@ -2353,7 +2353,7 @@
  2383 0cc6 811C      		adc r8,__zero_reg__
  2384 0cc8 911C      		adc r9,__zero_reg__
  2385               	/* #APP */
- 2386               	 ;  1692 "stk500boot.c" 1
+ 2386               	 ;  1693 "stk500boot.c" 1
  2387 0cca 8BBE      		out 59, r8
  2388 0ccc F301      		movw r30, r6
  2389 0cce 8791      		elpm r24, Z+
@@ -2375,7 +2375,7 @@
  2405 0cde 811C      		adc r8,__zero_reg__
  2406 0ce0 911C      		adc r9,__zero_reg__
  2407               	/* #APP */
- 2408               	 ;  1693 "stk500boot.c" 1
+ 2408               	 ;  1694 "stk500boot.c" 1
  2409 0ce2 8BBE      		out 59, r8
  2410 0ce4 F301      		movw r30, r6
  2411 0ce6 3791      		elpm r19, Z+
@@ -2397,7 +2397,7 @@
  2427 0cf8 811C      		adc r8,__zero_reg__
  2428 0cfa 911C      		adc r9,__zero_reg__
  2429               	/* #APP */
- 2430               	 ;  1694 "stk500boot.c" 1
+ 2430               	 ;  1695 "stk500boot.c" 1
  2431 0cfc 8BBE      		out 59, r8
  2432 0cfe F301      		movw r30, r6
  2433 0d00 4791      		elpm r20, Z+
@@ -3818,7 +3818,7 @@
  3848               	.LVL232:
  3849 13e0 89E0      		ldi r24,lo8(9)
  3850               	/* #APP */
- 3851               	 ;  846 "stk500boot.c" 1
+ 3851               	 ;  847 "stk500boot.c" 1
  3852 13e2 8093 5700 		sts 87, r24
  3853 13e6 9491      		lpm r25, Z
  3854               		
@@ -3839,7 +3839,7 @@
  3869               	.LVL235:
  3870 13f2 89E0      		ldi r24,lo8(9)
  3871               	/* #APP */
- 3872               	 ;  850 "stk500boot.c" 1
+ 3872               	 ;  851 "stk500boot.c" 1
  3873 13f4 8093 5700 		sts 87, r24
  3874 13f8 9491      		lpm r25, Z
  3875               		
@@ -3985,7 +3985,7 @@
  4015               	.LVL259:
  4016 1482 89E0      		ldi r24,lo8(9)
  4017               	/* #APP */
- 4018               	 ;  951 "stk500boot.c" 1
+ 4018               	 ;  952 "stk500boot.c" 1
  4019 1484 8093 5700 		sts 87, r24
  4020 1488 8491      		lpm r24, Z
  4021               		
@@ -4019,7 +4019,7 @@
  4049               	.LVL263:
  4050 14a4 89E0      		ldi r24,lo8(9)
  4051               	/* #APP */
- 4052               	 ;  962 "stk500boot.c" 1
+ 4052               	 ;  963 "stk500boot.c" 1
  4053 14a6 8093 5700 		sts 87, r24
  4054 14aa 8491      		lpm r24, Z
  4055               		
@@ -4037,7 +4037,7 @@
  4067               	.LVL266:
  4068 14b2 89E0      		ldi r24,lo8(9)
  4069               	/* #APP */
- 4070               	 ;  964 "stk500boot.c" 1
+ 4070               	 ;  965 "stk500boot.c" 1
  4071 14b4 8093 5700 		sts 87, r24
  4072 14b8 8491      		lpm r24, Z
  4073               		
@@ -4055,7 +4055,7 @@
  4085               	.LVL269:
  4086 14c0 89E0      		ldi r24,lo8(9)
  4087               	/* #APP */
- 4088               	 ;  968 "stk500boot.c" 1
+ 4088               	 ;  969 "stk500boot.c" 1
  4089 14c2 8093 5700 		sts 87, r24
  4090 14c6 8491      		lpm r24, Z
  4091               		
@@ -4078,7 +4078,7 @@
  4108 14ce 836C      		ori r24,lo8(-61)
  4109 14d0 99E0      		ldi r25,lo8(9)
  4110               	/* #APP */
- 4111               	 ;  983 "stk500boot.c" 1
+ 4111               	 ;  984 "stk500boot.c" 1
  4112 14d2 E1E0      		ldi r30, 1
  4113 14d4 F0E0      		ldi r31, 0
  4114 14d6 082E      		mov r0, r24
@@ -4241,7 +4241,7 @@
  4271 15ca D140      		sbci r29,hi8(306)
  4272               	.LVL286:
  4273               	/* #APP */
- 4274               	 ;  1024 "stk500boot.c" 1
+ 4274               	 ;  1025 "stk500boot.c" 1
  4275 15cc F701      		movw r30, r14
  4276 15ce 0093 5B00 		sts  91, r16
  4277 15d2 8093 5700 		sts 87, r24
@@ -4325,7 +4325,7 @@
  4355 164a 9F2B      		or r25,r31
  4356               	.LVL293:
  4357               	/* #APP */
- 4358               	 ;  1035 "stk500boot.c" 1
+ 4358               	 ;  1036 "stk500boot.c" 1
  4359 164c 0C01      		movw  r0, r24
  4360 164e FA01      		movw r30, r20
  4361 1650 6093 5B00 		sts 91, r22
@@ -4364,7 +4364,7 @@
  4394 1684 C052      		subi r28,lo8(288)
  4395 1686 D140      		sbci r29,hi8(288)
  4396               	/* #APP */
- 4397               	 ;  1041 "stk500boot.c" 1
+ 4397               	 ;  1042 "stk500boot.c" 1
  4398 1688 F801      		movw r30, r16
  4399 168a 2093 5B00 		sts 91, r18
  4400 168e 8093 5700 		sts 87, r24
@@ -4381,7 +4381,7 @@
  4411               	.LM559:
  4412 169a 81E1      		ldi r24,lo8(17)
  4413               	/* #APP */
- 4414               	 ;  1043 "stk500boot.c" 1
+ 4414               	 ;  1044 "stk500boot.c" 1
  4415 169c 8093 5700 		sts 87, r24
  4416 16a0 E895      		spm
  4417               		
@@ -4534,7 +4534,7 @@
  4564 176c D140      		sbci r29,hi8(288)
  4565               	.LVL319:
  4566               	/* #APP */
- 4567               	 ;  1078 "stk500boot.c" 1
+ 4567               	 ;  1079 "stk500boot.c" 1
  4568 176e 0BBF      		out 59, r16
  4569 1770 F701      		movw r30, r14
  4570 1772 8791      		elpm r24, Z+
@@ -4904,7 +4904,7 @@
  4934               	.LBE789:
  4935               	.LM625:
  4936               	/* #APP */
- 4937               	 ;  1185 "stk500boot.c" 1
+ 4937               	 ;  1186 "stk500boot.c" 1
  4938 1952 0000      		nop
  4939               	 ;  0 "" 2
  4940               	.LM626:
@@ -4916,13 +4916,13 @@
  4946               	.LM627:
  4947 195e 81E1      		ldi r24,lo8(17)
  4948               	/* #APP */
- 4949               	 ;  1192 "stk500boot.c" 1
+ 4949               	 ;  1193 "stk500boot.c" 1
  4950 1960 8093 5700 		sts 87, r24
  4951 1964 E895      		spm
  4952               		
  4953               	 ;  0 "" 2
  4954               	.LM628:
- 4955               	 ;  1195 "stk500boot.c" 1
+ 4955               	 ;  1196 "stk500boot.c" 1
  4956 1966 EE27      		clr	r30		
  4957 1968 FF27      		clr	r31		
  4958 196a 0994      		ijmp	
@@ -5025,8 +5025,8 @@
  5047      3D20 00
  5048               	.global	gTextMsg_GCC_DATE_STR
  5051               	gTextMsg_GCC_DATE_STR:
- 5052 00d3 5365 7020 		.string	"Sep 22 2017"
- 5052      3232 2032 
+ 5052 00d3 4F63 7420 		.string	"Oct 10 2017"
+ 5052      3130 2032 
  5052      3031 3700 
  5053               	.global	gTextMsg_AVR_LIBC_VER_STR
  5056               	gTextMsg_AVR_LIBC_VER_STR:
@@ -5172,71 +5172,71 @@
  5303               	.Letext0:
 DEFINED SYMBOLS
                             *ABS*:00000000 stk500boot.c
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:2      *ABS*:0000003f __SREG__
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:3      *ABS*:0000003e __SP_H__
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:4      *ABS*:0000003d __SP_L__
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5      *ABS*:00000034 __CCP__
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:6      *ABS*:00000000 __tmp_reg__
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:7      *ABS*:00000001 __zero_reg__
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:19     .init9:00000000 __jumpMain
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:27     *ABS*:000021ff __stack
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:813    .text:00000386 main
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:65     .text:00000000 delay_ms
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:110    .text:0000001c init_ports
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:154    .text:0000004a PrintFromPROGMEM
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:211    .text:0000007e PrintNewLine
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:255    .text:000000b0 PrintFromPROGMEMln
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:273    .text:000000ba PrintString
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:315    .text:000000e0 PrintHexByte
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:385    .text:0000012e PrintDecInt
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:488    .text:000001bc PrintAvailablePort
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5121   .progmem.data:0000018a gTextMsg_PORT
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:527    .text:000001e8 DumpHex
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:4975   .bss:00000000 app_start
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:2      *ABS*:0000003f __SREG__
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:3      *ABS*:0000003e __SP_H__
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:4      *ABS*:0000003d __SP_L__
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5      *ABS*:00000034 __CCP__
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:6      *ABS*:00000000 __tmp_reg__
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:7      *ABS*:00000001 __zero_reg__
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:19     .init9:00000000 __jumpMain
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:27     *ABS*:000021ff __stack
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:813    .text:00000386 main
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:65     .text:00000000 delay_ms
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:110    .text:0000001c init_ports
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:154    .text:0000004a PrintFromPROGMEM
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:211    .text:0000007e PrintNewLine
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:255    .text:000000b0 PrintFromPROGMEMln
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:273    .text:000000ba PrintString
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:315    .text:000000e0 PrintHexByte
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:385    .text:0000012e PrintDecInt
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:488    .text:000001bc PrintAvailablePort
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5121   .progmem.data:0000018a gTextMsg_PORT
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:527    .text:000001e8 DumpHex
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:4975   .bss:00000000 app_start
                             *COM*:00000004 gRamIndex
                             *COM*:00000004 gFlashIndex
                             *COM*:00000004 gEepromIndex
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:4986   .progmem.data:0000000b gTextMsg_Explorer
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:4991   .progmem.data:0000002c gTextMsg_Prompt
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5126   .progmem.data:0000018f gTextMsg_HELP_MSG_0
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5131   .progmem.data:0000019b gTextMsg_HELP_MSG_QM
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5001   .progmem.data:0000003d gTextMsg_COMPILED_ON
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5051   .progmem.data:000000d3 gTextMsg_GCC_DATE_STR
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5006   .progmem.data:0000004c gTextMsg_CPU_Type
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:4981   .progmem.data:00000000 gTextMsg_CPU_Name
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5011   .progmem.data:0000005b gTextMsg_AVR_ARCH
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5021   .progmem.data:00000079 gTextMsg_GCC_VERSION
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5061   .progmem.data:000000e5 gTextMsg_GCC_VERSION_STR
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5016   .progmem.data:0000006a gTextMsg_AVR_LIBC
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5056   .progmem.data:000000df gTextMsg_AVR_LIBC_VER_STR
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5026   .progmem.data:00000088 gTextMsg_CPU_SIGNATURE
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5031   .progmem.data:00000097 gTextMsg_FUSE_BYTE_LOW
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5036   .progmem.data:000000a6 gTextMsg_FUSE_BYTE_HIGH
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5041   .progmem.data:000000b5 gTextMsg_FUSE_BYTE_EXT
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5046   .progmem.data:000000c4 gTextMsg_FUSE_BYTE_LOCK
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5136   .progmem.data:000001a7 gTextMsg_HELP_MSG_AT
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5106   .progmem.data:00000167 gTextMsg_WriteToEEprom
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5101   .progmem.data:00000165 gTextMsg_SPACE
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5111   .progmem.data:00000173 gTextMsg_ReadingEEprom
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5116   .progmem.data:0000017e gTextMsg_EEPROMerrorCnt
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5141   .progmem.data:000001b5 gTextMsg_HELP_MSG_B
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5146   .progmem.data:000001c1 gTextMsg_HELP_MSG_E
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5151   .progmem.data:000001cf gTextMsg_HELP_MSG_F
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5156   .progmem.data:000001dc gTextMsg_HELP_MSG_H
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5161   .progmem.data:000001e3 gTextMsg_HELP_MSG_L
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5166   .progmem.data:000001f4 gTextMsg_HELP_MSG_Q
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5171   .progmem.data:000001fb gTextMsg_HELP_MSG_R
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5176   .progmem.data:00000206 gTextMsg_HELP_MSG_V
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5181   .progmem.data:0000021f gTextMsg_HELP_MSG_Y
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5066   .progmem.data:000000eb gTextMsg_VECTOR_HEADER
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5071   .progmem.data:00000120 gTextMsg_noVector
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5076   .progmem.data:0000012a gTextMsg_rjmp
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5081   .progmem.data:00000131 gTextMsg_jmp
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5086   .progmem.data:00000136 gTextMsg_WHAT_PORT
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5091   .progmem.data:00000141 gTextMsg_PortNotSupported
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5096   .progmem.data:00000154 gTextMsg_MustBeLetter
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:4996   .progmem.data:00000038 gTextMsg_HUH
-C:\Users\AGARCI~1\AppData\Local\Temp/ccSQFAxT.s:5186   .progmem.data:0000022c gTextMsg_END
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:4986   .progmem.data:0000000b gTextMsg_Explorer
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:4991   .progmem.data:0000002c gTextMsg_Prompt
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5126   .progmem.data:0000018f gTextMsg_HELP_MSG_0
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5131   .progmem.data:0000019b gTextMsg_HELP_MSG_QM
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5001   .progmem.data:0000003d gTextMsg_COMPILED_ON
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5051   .progmem.data:000000d3 gTextMsg_GCC_DATE_STR
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5006   .progmem.data:0000004c gTextMsg_CPU_Type
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:4981   .progmem.data:00000000 gTextMsg_CPU_Name
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5011   .progmem.data:0000005b gTextMsg_AVR_ARCH
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5021   .progmem.data:00000079 gTextMsg_GCC_VERSION
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5061   .progmem.data:000000e5 gTextMsg_GCC_VERSION_STR
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5016   .progmem.data:0000006a gTextMsg_AVR_LIBC
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5056   .progmem.data:000000df gTextMsg_AVR_LIBC_VER_STR
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5026   .progmem.data:00000088 gTextMsg_CPU_SIGNATURE
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5031   .progmem.data:00000097 gTextMsg_FUSE_BYTE_LOW
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5036   .progmem.data:000000a6 gTextMsg_FUSE_BYTE_HIGH
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5041   .progmem.data:000000b5 gTextMsg_FUSE_BYTE_EXT
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5046   .progmem.data:000000c4 gTextMsg_FUSE_BYTE_LOCK
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5136   .progmem.data:000001a7 gTextMsg_HELP_MSG_AT
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5106   .progmem.data:00000167 gTextMsg_WriteToEEprom
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5101   .progmem.data:00000165 gTextMsg_SPACE
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5111   .progmem.data:00000173 gTextMsg_ReadingEEprom
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5116   .progmem.data:0000017e gTextMsg_EEPROMerrorCnt
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5141   .progmem.data:000001b5 gTextMsg_HELP_MSG_B
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5146   .progmem.data:000001c1 gTextMsg_HELP_MSG_E
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5151   .progmem.data:000001cf gTextMsg_HELP_MSG_F
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5156   .progmem.data:000001dc gTextMsg_HELP_MSG_H
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5161   .progmem.data:000001e3 gTextMsg_HELP_MSG_L
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5166   .progmem.data:000001f4 gTextMsg_HELP_MSG_Q
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5171   .progmem.data:000001fb gTextMsg_HELP_MSG_R
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5176   .progmem.data:00000206 gTextMsg_HELP_MSG_V
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5181   .progmem.data:0000021f gTextMsg_HELP_MSG_Y
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5066   .progmem.data:000000eb gTextMsg_VECTOR_HEADER
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5071   .progmem.data:00000120 gTextMsg_noVector
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5076   .progmem.data:0000012a gTextMsg_rjmp
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5081   .progmem.data:00000131 gTextMsg_jmp
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5086   .progmem.data:00000136 gTextMsg_WHAT_PORT
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5091   .progmem.data:00000141 gTextMsg_PortNotSupported
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5096   .progmem.data:00000154 gTextMsg_MustBeLetter
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:4996   .progmem.data:00000038 gTextMsg_HUH
+C:\Users\AGARCI~1\AppData\Local\Temp/ccI1QgwZ.s:5186   .progmem.data:0000022c gTextMsg_END
 
 UNDEFINED SYMBOLS
 __divmodhi4
