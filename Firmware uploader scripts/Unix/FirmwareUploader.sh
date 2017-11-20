@@ -4,6 +4,7 @@
 #Bash script for loading Bootloader and Firmware to BCN3D Electronics
 #under UNIX machines.
 #Marc Cobler Cosmen - October 2015
+#Alejandro Garcia Moreno - November 2017
 
 #Variables
 OPTIONS="Firmware-Sigma Firmware-Sigmax Bootloader Everything-Sigma Everything-Sigmax Update TestCommunication Exit"
