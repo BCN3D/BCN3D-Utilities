@@ -1,12 +1,12 @@
-file C:\Users\agarciamoreno\Desktop\loadrunbank\Temp4D.4dg
+file C:\Users\agarciamoreno\Documents\GitHub\BCN3D-Utilities\Screen bootloader script\BootLoader Script\Temp4D.4dg
 
-file C:\Program Files (x86)\4D Labs\4D Workshop 4 IDE\include\uLCD-35DT.fnc
+file C:\Program Files (x86)\4D Labs\4D Workshop 4 IDE\include\Gen4-uLCD-35DCT-CLB.fnc
 
-000001  000001  #platform "uLCD-35DT"
-000002  000001  #platform "uLCD-35DT"
+000001  000001  #platform "Gen4-uLCD-35DCT-CLB"
+000002  000001  #platform "Gen4-uLCD-35DCT-CLB"
 000003  000008  */
-000004  000009      #constant ULCD_35DT_DIABLO16_GFX
-000005  000009      #constant ULCD_35DT_DIABLO16_GFX
+000004  000009      #constant Gen4_ULCD_35DCT_CLB_DIABLO16_GFX
+000005  000009      #constant Gen4_ULCD_35DCT_CLB_DIABLO16_GFX
 000006  000010        
 000007  000011      #IFNOT EXISTS DIABLO16_GFX2_FUNCTIONS
 file C:\Program Files (x86)\4D Labs\4D Workshop 4 IDE\include\Diablo16_Functions.fnc
@@ -5479,7 +5479,7 @@ bus_Write8                          -121  0xffffff87 (PmmC func) args[1] r=0  (n
 BUTTON_DOWN                            0  0x00000000 (const dword)  (not used)
 BUTTON_UP                              1  0x00000001 (const dword)  (not used)
 ByteSwap                             -49  0xffffffcf (PmmC func) args[1] r=1  (not used)
-C:\Users\agarciamoreno\Desktop\loadrunbank\Temp4D.4dg    2806  0x00000af6 (const ??? 0)  (not used)
+C:\Users\agarciamoreno\Documents\GitHub\BCN3D-Utilities\Screen bootloader script\BootLoader Script\Temp4D.4dg    2806  0x00000af6 (const ??? 0)  (not used)
 charheight                           -12  0xfffffff4 (PmmC func) args[1] r=1  (not used)
 charwidth                            -11  0xfffffff5 (PmmC func) args[1] r=1  (not used)
 CHECKED                                0  0x00000000 (const dword)  (not used)
@@ -5811,7 +5811,8 @@ FONT_9                                 9  0x00000009 (const dword)  (not used)
 FONT_ID                                2  0x00000002 (const dword)  (not used)
 FONT_SIZE                              2  0x00000002 (const dword)  (not used)
 FRAME_DELAY                           22  0x00000016 (const dword)  (not used)
-GenieProg                         4833680  0x0049c190??? GenieProg                          string SYM_DEFINED   (usage 9)
+Gen4_ULCD_35DCT_CLB_DIABLO16_GFX       0  0x00000000 (const ??? 0)  (not used)
+GenieProg                         16301760  0x00f8bec0??? GenieProg                          string SYM_DEFINED   (usage 9)
 GFX                                63489  0x0000f801 (const dword)  (not used)
 gfx_332to565                        -165  0xffffff5b (PmmC func) args[1] r=1  (not used)
 gfx_565to332                        -166  0xffffff5a (PmmC func) args[1] r=1  (not used)
@@ -6580,7 +6581,6 @@ UDEC5ZB                            25866  0x0000650a (const dword)  (not used)
 UDECZ                              21770  0x0000550a (const dword)  (not used)
 UDECZB                             25866  0x0000650a (const dword)  (not used)
 udiv_3232                            -74  0xffffffb6 (PmmC func) args[3] r=1  (not used)
-ULCD_35DT_DIABLO16_GFX                 0  0x00000000 (const ??? 0)  (not used)
 umul_1616                            -73  0xffffffb7 (PmmC func) args[3] r=1  (not used)
 UNCHECKED                              1  0x00000001 (const dword)  (not used)
 UNDERLINED                           128  0x00000080 (const dword)  (not used)
