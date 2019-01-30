@@ -1,4 +1,4 @@
-file C:\Users\agarciamoreno\Documents\GitHub\BCN3D-Utilities\Screen bootloader script\BootLoader Script\Temp4D.4dg
+file C:\Users\agarciamoreno\Desktop\Dev_Pantallas R19\R19 LCD Updater\BootLoader Script_dev\RunFlash.4dg
 
 file C:\Program Files (x86)\4D Labs\4D Workshop 4 IDE\include\Gen4-uLCD-35DCT-CLB.fnc
 
@@ -5199,131 +5199,185 @@ file C:\Program Files (x86)\4D Labs\4D Workshop 4 IDE\include\Diablo16_Functions
 005193  000003        
 005194  000017  **************************************************************************************************************/
 005195  000018        
-005196  000019  #constant  GenieProg "RunFlash.4xe" // You can rename this to your projects name, but it must be 8.3 format only.
-005197  000019  #constant  GenieProg "RunFlash.4xe" // You can rename this to your projects name, but it must be 8.3 format only.
-005198  000020        
-005199  000021  #MODE RUNFLASH
-005200  000022        
-005201  000023  #CONST
-005202  000036  #END
-005203  000037        
-005204  000038  var block[1024], *hndl, ndt[6] ;
-005205  000039        
-005206  000040  func decodeDateTime()
-005207  000041      ndt[YYYY] := hndl[FILE_DATE] >> 9 + 1980 ;
-005208  000042      ndt[MM] := (hndl[FILE_DATE] >> 5) & 0xf ;
-005209  000043      ndt[DD] := hndl[FILE_DATE] & 0x1f ;
-005210  000044      ndt[HH] := hndl[FILE_TIME] >> 11 ;
-005211  000045      ndt[NN] := (hndl[FILE_TIME] >> 5) & 0x3f ;
-005212  000046      ndt[SS] := (hndl[FILE_TIME] & 0x1f) * 2 ;
-005213  000047  endfunc
-005214  000048        
-005215  000049  func printDateTime(var *dt)
-005216  000050      print(dt[YYYY], "/", [DEC2Z] dt[MM], "/", [DEC2Z] dt[DD]," ", [DEC2Z] dt[HH], ":", [DEC2Z] dt[NN], ":", [DEC2Z] dt[SS]) ;
-005217  000051  endfunc
-005218  000052        
-005219  000053  func uSDisNewer()
-005220  000054      var i ;
-005221  000055      for (i := 0; i < 6; i++)        // compare date/time to flash block, must be in yymmddhhnnss order in memory
-005222  000056          if (block[i] < ndt[i])
-005223  000057              return 1 ;              // if newer then exit newer
-005224  000058          else if (block[i] > ndt[i])
-005225  000059              return 0 ;              // if older then exit older
-005226  000060          endif
-005227  000061      next
-005228  000062      return 0 ;                      // if all equal
-005229  000063  endfunc
-005230  000064        
-005231  000065  //-----------------------------------------------------------------------------------------------------------------------
-005232  000066  //-----------------------------------------------------------------------------------------------------------------------
-005233  000067  func UsdIsDifferent()
-005234  000068      var i ;
-005235  000069      for (i := 0; i < 6; i++)        // compare date/time to flash block, must be in yymmddhhnnss order in memory
-005236  000070          if (block[i] != ndt[i])
-005237  000071              return 1 ;              // if different then exit to update
-005238  000072          endif
-005239  000073      next
-005240  000074      return 0 ;                      // if all equal
-005241  000075  endfunc
-005242  000076  //-----------------------------------------------------------------------------------------------------------------------
-005243  000077  //-----------------------------------------------------------------------------------------------------------------------
-005244  000078        
-005245  000088  */
-005246  000089        
-005247  000090  func main()
-005248  000091      var i, doupdate ;
-005249  000092        
-005250  000093      gfx_ScreenMode(LANDSCAPE_R);
-005251  000094        
-005252  000095      putstr("Loading...\n");
-005253  000096      putstr("Build Version 27-07-2017\n");
-005254  000097      if (!file_Mount())
-005255  000098          while(!file_Mount())
-005256  000099              putstr("Drive not mounted...");
-005257  000100              pause(200);
-005258  000101              gfx_Cls();
-005259  000102              pause(200);
-005260  000103          wend
-005261  000104      endif
-005262  000105        
-005263  000106      hndl := file_Open(GenieProg, 'r') ;
-005264  000107      if (!hndl)
-005265  000108          print([STR] GenieProg, " Not Found") ;
-005266  000109          pause(400);
-005267  000110          SystemReset();
-005268  000111      endif
-005269  000112        
-005270  000113      file_Close(hndl) ;
-005271  000114      decodeDateTime() ;                                      // decode date+time into yymmddhhnnss array of values
-005272  000115        
-005273  000116      flash_Copy(FLASHBANK_0, FlashByte, block, 1024);        // read flashbank0 view of current datetime of program in flashbank1
-005274  000117        
-005275  000118  //    setDateTime(block,2016,08,31,08,09,12) ;              // for testing
-005276  000119        
-005277  000120      if ((block[ID1] != BlockID1) || (block[ID2] != BlockID2))   // this is always true for first run after loading program as flash is cleared by program load
-005278  000121          doupdate := 1 ;
-005279  000122          print("Update required: Bank is empty, new is ") ;
-005280  000123          printDateTime(ndt) ;
-005281  000124          print("\n") ;
-005282  000125   //   else if (uSDisNewer())
-005283  000126      else if (UsdIsDifferent())
-005284  000127          doupdate := 1 ;
-005285  000128          print("Update required: ") ;
-005286  000129          printDateTime(ndt) ;
-005287  000130          print(" > ") ;
-005288  000131          printDateTime(block) ;
-005289  000132          print("\n") ;
-005290  000133      else
-005291  000134          doupdate := 0 ;
-005292  000135          print("Update not required, current is ") ;
-005293  000136          printDateTime(block) ;
-005294  000137          print("\n") ;
-005295  000138      endif
-005296  000139        
-005297  000140      if (doupdate)
-005298  000141          i := flash_LoadFile(FLASHBANK_1, GenieProg);        // load to bank
-005299  000142          if (i)
-005300  000143              print("Program loaded into Flashbank\n") ;
-005301  000144          else
-005302  000145              print("Program failed to load into Flashbank\n") ;
-005303  000146              repeat forever
-005304  000147          endif
-005305  000148          for (i := 0; i < 6; i++)                            // copy new date/time to flash block
-005306  000149              block[i] := ndt[i] ;
-005307  000150          next
-005308  000151          block[ID1] := BlockID1 ;                            // set IDs
-005309  000152          block[ID2] := BlockID2 ;
-005310  000153          i := flash_WriteBlock(block, FLASHBANK_0, FlashPage) ;
-005311  000154          if (i)
-005312  000155              print("Flash update successful\n") ;
-005313  000156          else
-005314  000157              print("Flash update Failed\n") ;            // probably because program is larger than the start of the block we are saving the date/time into
-005315  000158              repeat forever
-005316  000159          endif
-005317  000160      endif
-005318  000161    //  pause(2000) ;     // delete this to run faster after testing
-005319  000162      flash_Run(FLASHBANK_1);
-005320  000163  endfunc
+005196  000019  #constant  GenieProg "RunBank0.4xe" // You can rename this to your projects name, but it must be 8.3 format only.
+005197  000019  #constant  GenieProg "RunBank0.4xe" // You can rename this to your projects name, but it must be 8.3 format only.
+005198  000020  #constant  GenieProg_tobeErase "RunFlash.4xe" // You can rename this to your projects name, but it must be 8.3 format only.
+005199  000020  #constant  GenieProg_tobeErase "RunFlash.4xe" // You can rename this to your projects name, but it must be 8.3 format only.
+005200  000021  #constant  GenieProg_tobeRenamed "NewFlash.4xe" // You can rename this to your projects name, but it must be 8.3 format only.
+005201  000021  #constant  GenieProg_tobeRenamed "NewFlash.4xe" // You can rename this to your projects name, but it must be 8.3 format only.
+005202  000022  #MODE RUNFLASH
+005203  000023        
+005204  000024  #CONST
+005205  000037  #END
+005206  000038        
+005207  000039  var block[1024], *hndl, ndt[6] ;
+005208  000040        
+005209  000041  func decodeDateTime()
+005210  000042      ndt[YYYY] := hndl[FILE_DATE] >> 9 + 1980 ;
+005211  000043      ndt[MM] := (hndl[FILE_DATE] >> 5) & 0xf ;
+005212  000044      ndt[DD] := hndl[FILE_DATE] & 0x1f ;
+005213  000045      ndt[HH] := hndl[FILE_TIME] >> 11 ;
+005214  000046      ndt[NN] := (hndl[FILE_TIME] >> 5) & 0x3f ;
+005215  000047      ndt[SS] := (hndl[FILE_TIME] & 0x1f) * 2 ;
+005216  000048  endfunc
+005217  000049        
+005218  000050  func printDateTime(var *dt)
+005219  000051      print(dt[YYYY], "/", [DEC2Z] dt[MM], "/", [DEC2Z] dt[DD]," ", [DEC2Z] dt[HH], ":", [DEC2Z] dt[NN], ":", [DEC2Z] dt[SS]) ;
+005220  000052  endfunc
+005221  000053        
+005222  000054  func uSDisNewer()
+005223  000055      var i ;
+005224  000056      for (i := 0; i < 6; i++)        // compare date/time to flash block, must be in yymmddhhnnss order in memory
+005225  000057          if (block[i] < ndt[i])
+005226  000058              return 1 ;              // if newer then exit newer
+005227  000059          else if (block[i] > ndt[i])
+005228  000060              return 0 ;              // if older then exit older
+005229  000061          endif
+005230  000062      next
+005231  000063      return 0 ;                      // if all equal
+005232  000064  endfunc
+005233  000065        
+005234  000066  //-----------------------------------------------------------------------------------------------------------------------
+005235  000067  //-----------------------------------------------------------------------------------------------------------------------
+005236  000068  func UsdIsDifferent()
+005237  000069      var i ;
+005238  000070      for (i := 0; i < 6; i++)        // compare date/time to flash block, must be in yymmddhhnnss order in memory
+005239  000071          if (block[i] != ndt[i])
+005240  000072              return 1 ;              // if different then exit to update
+005241  000073          endif
+005242  000074      next
+005243  000075      return 0 ;                      // if all equal
+005244  000076  endfunc
+005245  000077  //-----------------------------------------------------------------------------------------------------------------------
+005246  000078  //-----------------------------------------------------------------------------------------------------------------------
+005247  000079  //=========================================================================
+005248  000080  // set the filenam in a file control block in the correct 8 3 format
+005249  000081  // return 0 if filename ok
+005250  000082  //=========================================================================
+005251  000083  func setFileName( var *fp, var fname)
+005252  000084        
+005253  000085      var *dest, *src, c, n;
+005254  000086        
+005255  000087      src := str_Ptr(fname);
+005256  000088      dest := str_Ptr(fp+FILE_NAME);                                  // point to name buffer, stricly 8 chars
+005257  000089      n := 8;
+005258  000090      gosub copyLegalChars;
+005259  000094      gosub copyLegalChars; */
+005260  000095      return;
+005261  000096        
+005262  000097      // copy up to n chars from source to des,
+005263  000098      // terminate when not 'a' to 'z', 'A' to 'Z', '0' to '9' or '_'
+005264  000099  copyLegalChars:
+005265  000100      while(n)
+005266  000101          c := toupper(str_GetByte(src));                             // read a char and convert to upper case
+005267  000102          if( !isalnum(c) && c != '_')  break;                        // continue while legal,
+005268  000103          str_PutByte(dest++, c);
+005269  000104          src++;
+005270  000105          n--;
+005271  000106      wend
+005272  000107      while(n--) str_PutByte(dest++, ' ');                            // pad rest of buffer with spaces
+005273  000108      endsub;
+005274  000109        
+005275  000110  endfunc
+005276  000120  */
+005277  000121        
+005278  000122  func main()
+005279  000123      var i, doupdate ;
+005280  000124      var fileHandle;
+005281  000125      gfx_ScreenMode(LANDSCAPE_R);
+005282  000126        
+005283  000127      putstr("Welcome to Sigma BootuSD updater\n");
+005284  000128      putstr("Build Version 03-08-2018\n");
+005285  000129      pause(1000);
+005286  000130      if (!file_Mount())
+005287  000131          while(!file_Mount())
+005288  000132              putstr("Drive not mounted...");
+005289  000133              pause(200);
+005290  000134              gfx_Cls();
+005291  000135              pause(200);
+005292  000136          wend
+005293  000137      endif
+005294  000138        
+005295  000139      hndl := file_Open(GenieProg, 'r') ;
+005296  000140      if (!hndl)
+005297  000141          print([STR] GenieProg, " Not Found") ;
+005298  000142          pause(400);
+005299  000143          SystemReset();
+005300  000144      endif
+005301  000145        
+005302  000146      file_Close(hndl) ;
+005303  000147      decodeDateTime() ;                                      // decode date+time into yymmddhhnnss array of values
+005304  000148        
+005305  000149      flash_Copy(FLASHBANK_1, FlashByte, block, 1024);        // read flashbank0 view of current datetime of program in flashbank1
+005306  000150        
+005307  000151  //    setDateTime(block,2016,08,31,08,09,12) ;              // for testing
+005308  000152        
+005309  000153      if ((block[ID1] != BlockID1) || (block[ID2] != BlockID2))   // this is always true for first run after loading program as flash is cleared by program load
+005310  000154          doupdate := 1 ;
+005311  000155          print("Update required: Bank is empty, new is ") ;
+005312  000156          printDateTime(ndt) ;
+005313  000157          print("\n") ;
+005314  000158   //   else if (uSDisNewer())
+005315  000159      else if (UsdIsDifferent())
+005316  000160          doupdate := 1 ;
+005317  000161          print("Update required: ") ;
+005318  000162          printDateTime(ndt) ;
+005319  000163          print(" > ") ;
+005320  000164          printDateTime(block) ;
+005321  000165          print("\n") ;
+005322  000166      else
+005323  000167          doupdate := 0 ;
+005324  000168          print("Update not required, current is ") ;
+005325  000169          printDateTime(block) ;
+005326  000170          print("\n") ;
+005327  000171      endif
+005328  000172        
+005329  000173      if (doupdate)
+005330  000174          i := flash_LoadFile(FLASHBANK_0, GenieProg);        // load to bank
+005331  000175          if (i)
+005332  000176              print("Program loaded into Flashbank\n") ;
+005333  000177          else
+005334  000178              print("Program failed to load into Flashbank\n") ;
+005335  000179              repeat forever
+005336  000180          endif
+005337  000181          for (i := 0; i < 6; i++)                            // copy new date/time to flash block
+005338  000182              block[i] := ndt[i] ;
+005339  000183          next
+005340  000184          block[ID1] := BlockID1 ;                            // set IDs
+005341  000185          block[ID2] := BlockID2 ;
+005342  000186          i := flash_WriteBlock(block, FLASHBANK_1, FlashPage) ;
+005343  000187          if (i)
+005344  000188              print("Flash update successful\n") ;
+005345  000189          else
+005346  000190              print("Flash update Failed\n") ;            // probably because program is larger than the start of the block we are saving the date/time into
+005347  000191              repeat forever
+005348  000192          endif
+005349  000193      endif
+005350  000194    //  pause(2000) ;     // delete this to run faster after testing
+005351  000195      putstr("Erase Sigma BootuSD updater(RunFlash.4xe file) \n");
+005352  000196      file_Erase(GenieProg_tobeErase);
+005353  000197      pause(200);
+005354  000198        
+005355  000199      putstr("Erase Sigma BootuSD(RunBank1.4xe file) \n");
+005356  000200      file_Erase(GenieProg);
+005357  000201      pause(200);
+005358  000202        
+005359  000203      fileHandle:=file_Open(GenieProg_tobeRenamed,'a'); //MUST BE 'a'
+005360  000204      setFileName(fileHandle,GenieProg_tobeErase);
+005361  000205      file_Close(fileHandle);
+005362  000206      if (i)
+005363  000207              print("Success \n") ;
+005364  000208          else
+005365  000209              print("Failed \n") ;
+005366  000210              repeat forever
+005367  000211          endif
+005368  000212      pause(500);
+005369  000213        
+005370  000214      putstr("Lets update BootuSD \n");
+005371  000215      pause(1000);
+005372  000216      flash_Run(FLASHBANK_0);
+005373  000217        
+005374  000218  endfunc
 Notice: no execution path to func 'uSDisNewer'
 
 
@@ -5479,7 +5533,7 @@ bus_Write8                          -121  0xffffff87 (PmmC func) args[1] r=0  (n
 BUTTON_DOWN                            0  0x00000000 (const dword)  (not used)
 BUTTON_UP                              1  0x00000001 (const dword)  (not used)
 ByteSwap                             -49  0xffffffcf (PmmC func) args[1] r=1  (not used)
-C:\Users\agarciamoreno\Documents\GitHub\BCN3D-Utilities\Screen bootloader script\BootLoader Script\Temp4D.4dg    2806  0x00000af6 (const ??? 0)  (not used)
+C:\Users\agarciamoreno\Desktop\Dev_Pantallas R19\R19 LCD Updater\BootLoader Script_dev\RunFlash.4dg    2806  0x00000af6 (const ??? 0)  (not used)
 charheight                           -12  0xfffffff4 (PmmC func) args[1] r=1  (not used)
 charwidth                            -11  0xfffffff5 (PmmC func) args[1] r=1  (not used)
 CHECKED                                0  0x00000000 (const dword)  (not used)
@@ -5556,6 +5610,7 @@ com_TXbufferHold                    -276  0xfffffeec (PmmC func) args[1] r=1  (n
 com_TXcount                         -268  0xfffffef4 (PmmC func) args[0] r=1  (not used)
 com_TXemptyEvent                    -272  0xfffffef0 (PmmC func) args[1] r=1  (not used)
 CONTRAST                              25  0x00000019 (const dword)  (not used)
+copyLegalChars                    UNRESOLVED  (not used)
 COS                                  -58  0xffffffc6 (PmmC func) args[1] r=1  (not used)
 COUNT_EDGE                             3  0x00000003 (const dword)  (not used)
 COUNT_FALL                             2  0x00000002 (const dword)  (not used)
@@ -5584,7 +5639,7 @@ DEC4ZB                              9226  0x0000240a (const dword)  (not used)
 DEC5                                1290  0x0000050a (const dword)  (not used)
 DEC5Z                               5386  0x0000150a (const dword)  (not used)
 DEC5ZB                              9482  0x0000250a (const dword)  (not used)
-decodeDateTime                       990  0x000003de (User func) args[0] r=0  (usage 3)
+decodeDateTime                      1448  0x000005a8 (User func) args[0] r=0  (usage 3)
 DECZ                                5386  0x0000150a (const dword)  (not used)
 DECZB                               9482  0x0000250a (const dword)  (not used)
 DIABLO                                 3  0x00000003 (const dword)  (usage 3)
@@ -5656,7 +5711,7 @@ FE_SECTOR_READ_FAIL                   22  0x00000016 (const dword)  (not used)
 FE_SECTOR_WRITE_FAIL                  23  0x00000017 (const dword)  (not used)
 FILE_ATTRIBUTES                       18  0x00000012 (const dword)  (not used)
 FILE_BUFFER                           22  0x00000016 (const dword)  (not used)
-file_Close                          -431  0xfffffe51 (PmmC func) args[1] r=1  (usage 3)
+file_Close                          -431  0xfffffe51 (PmmC func) args[1] r=1  (usage 6)
 file_Count                          -425  0xfffffe57 (PmmC func) args[1] r=1  (not used)
 FILE_CURR_CLUSTER                      1  0x00000001 (const dword)  (not used)
 FILE_CURR_SECTOR                       2  0x00000002 (const dword)  (not used)
@@ -5666,7 +5721,7 @@ FILE_DATE                             10  0x0000000a (const dword)  (usage 9)
 file_Dir                            -426  0xfffffe56 (PmmC func) args[1] r=1  (not used)
 FILE_DISK                             21  0x00000015 (const dword)  (not used)
 FILE_ENTRY                            20  0x00000014 (const dword)  (not used)
-file_Erase                          -446  0xfffffe42 (PmmC func) args[1] r=1  (not used)
+file_Erase                          -446  0xfffffe42 (PmmC func) args[1] r=1  (usage 6)
 file_Error                          -424  0xfffffe58 (PmmC func) args[0] r=1  (not used)
 file_Exec                           -450  0xfffffe3e (PmmC func) args[2] r=1  (not used)
 file_Exists                         -429  0xfffffe53 (PmmC func) args[1] r=1  (not used)
@@ -5682,8 +5737,8 @@ file_LoadFunction                   -448  0xfffffe40 (PmmC func) args[1] r=1  (n
 file_LoadImageControl               -451  0xfffffe3d (PmmC func) args[3] r=1  (not used)
 FILE_MODE                             17  0x00000011 (const dword)  (not used)
 file_Mount                          -452  0xfffffe3c (PmmC func) args[0] r=1  (usage 6)
-FILE_NAME                             11  0x0000000b (const dword)  (not used)
-file_Open                           -430  0xfffffe52 (PmmC func) args[2] r=1  (usage 3)
+FILE_NAME                             11  0x0000000b (const dword)  (usage 3)
+file_Open                           -430  0xfffffe52 (PmmC func) args[2] r=1  (usage 6)
 FILE_PAGEFLAG                         19  0x00000013 (const dword)  (not used)
 file_PlayWAV                        -454  0xfffffe3a (PmmC func) args[1] r=1  (not used)
 file_PutC                           -440  0xfffffe48 (PmmC func) args[2] r=1  (not used)
@@ -5812,7 +5867,9 @@ FONT_ID                                2  0x00000002 (const dword)  (not used)
 FONT_SIZE                              2  0x00000002 (const dword)  (not used)
 FRAME_DELAY                           22  0x00000016 (const dword)  (not used)
 Gen4_ULCD_35DCT_CLB_DIABLO16_GFX       0  0x00000000 (const ??? 0)  (not used)
-GenieProg                         16301760  0x00f8bec0??? GenieProg                          string SYM_DEFINED   (usage 9)
+GenieProg                         16233192  0x00f7b2e8??? GenieProg                          string SYM_DEFINED   (usage 12)
+GenieProg_tobeErase               16233216  0x00f7b300??? GenieProg_tobeErase                string SYM_DEFINED   (usage 6)
+GenieProg_tobeRenamed             16233240  0x00f7b318??? GenieProg_tobeRenamed              string SYM_DEFINED   (usage 3)
 GFX                                63489  0x0000f801 (const dword)  (not used)
 gfx_332to565                        -165  0xffffff5b (PmmC func) args[1] r=1  (not used)
 gfx_565to332                        -166  0xffffff5a (PmmC func) args[1] r=1  (not used)
@@ -6065,7 +6122,7 @@ img_Show                            -381  0xfffffe83 (PmmC func) args[2] r=1  (n
 img_Touched                         -384  0xfffffe80 (PmmC func) args[2] r=1  (not used)
 IMG_WIDTH                             82  0x00000052 (const dword)  (not used)
 INVERSE                               64  0x00000040 (const dword)  (not used)
-isalnum                              -41  0xffffffd7 (PmmC func) args[1] r=1  (not used)
+isalnum                              -41  0xffffffd7 (PmmC func) args[1] r=1  (usage 3)
 isalpha                              -40  0xffffffd8 (PmmC func) args[1] r=1  (not used)
 isdigit                              -36  0xffffffdc (PmmC func) args[1] r=1  (not used)
 islower                              -39  0xffffffd9 (PmmC func) args[1] r=1  (not used)
@@ -6099,7 +6156,7 @@ M_PA6                                 64  0x00000040 (const dword)  (not used)
 M_PA7                                128  0x00000080 (const dword)  (not used)
 M_PA8                                256  0x00000100 (const dword)  (not used)
 M_PA9                                512  0x00000200 (const dword)  (not used)
-main                                 305  0x00000131 (User func) args[0] r=0  (not used)
+main                                 484  0x000001e4 (User func) args[0] r=0  (not used)
 MAX                                  -55  0xffffffc9 (PmmC func) args[2] r=1  (not used)
 MDA                                63552  0x0000f840 (const dword)  (not used)
 MEDIA_ADDRESS_HI                      91  0x0000005b (const dword)  (not used)
@@ -6201,7 +6258,7 @@ PANEL_FRAME                            3  0x00000003 (const dword)  (not used)
 PANEL_HIDE                             2  0x00000002 (const dword)  (not used)
 PANEL_RAISED                           1  0x00000001 (const dword)  (not used)
 PANEL_SUNKEN                           0  0x00000000 (const dword)  (not used)
-pause                                 -6  0xfffffffa (PmmC func) args[1] r=0  (usage 9)
+pause                                 -6  0xfffffffa (PmmC func) args[1] r=0  (usage 24)
 peekW                                -34  0xffffffde (PmmC func) args[1] r=1  (not used)
 PEN_SIZE                              16  0x00000010 (const dword)  (not used)
 PIN_AN                                 5  0x00000005 (const dword)  (not used)
@@ -6235,7 +6292,7 @@ pin_Val                             -115  0xffffff8d (PmmC func) args[2] r=0  (n
 pokeW                                -35  0xffffffdd (PmmC func) args[2] r=0  (not used)
 PORTRAIT                               2  0x00000002 (const dword)  (not used)
 PORTRAIT_R                             3  0x00000003 (const dword)  (not used)
-printDateTime                        852  0x00000354 (User func) args[1] r=0  (usage 12)
+printDateTime                       1310  0x0000051e (User func) args[1] r=0  (usage 12)
 PROGRESSBAR_HIDE                       2  0x00000002 (const dword)  (not used)
 PROGRESSBAR_RAISED                 65535  0x0000ffff (const dword)  (not used)
 PROGRESSBAR_SUNKEN                 65534  0x0000fffe (const dword)  (not used)
@@ -6275,7 +6332,7 @@ putch                                 -2  0xfffffffe (PmmC func) args[1] r=0  (n
 putchXY                               -3  0xfffffffd (PmmC func) args[3] r=0  (not used)
 putnum                                -7  0xfffffff9 (PmmC func) args[2] r=1  (not used)
 putnumXY                             -51  0xffffffcd (PmmC func) args[4] r=1  (not used)
-putstr                                -9  0xfffffff7 (PmmC func) args[1] r=1  (usage 9)
+putstr                                -9  0xfffffff7 (PmmC func) args[1] r=1  (usage 18)
 putstrCentred                         -5  0xfffffffb (PmmC func) args[3] r=0  (not used)
 putstrXY                              -4  0xfffffffc (PmmC func) args[3] r=0  (not used)
 PWM_10KHZ                              6  0x00000006 (const dword)  (not used)
@@ -6319,6 +6376,7 @@ serout1                             -241  0xffffff0f (PmmC func) args[1] r=0  (n
 serout2                             -242  0xffffff0e (PmmC func) args[1] r=0  (not used)
 serout3                             -243  0xffffff0d (PmmC func) args[1] r=0  (not used)
 setbaud                             -224  0xffffff20 (PmmC func) args[1] r=0  (not used)
+setFileName                         1132  0x0000046c (User func) args[2] r=0  (usage 3)
 SIN                                  -57  0xffffffc7 (PmmC func) args[1] r=1  (not used)
 SLIDER_HIDE                            2  0x00000002 (const dword)  (not used)
 SLIDER_RAISED                          1  0x00000001 (const dword)  (not used)
@@ -6426,7 +6484,7 @@ str_Copy                            -488  0xfffffe18 (PmmC func) args[2] r=1  (n
 str_CopyN                           -489  0xfffffe17 (PmmC func) args[3] r=1  (not used)
 str_Find                            -481  0xfffffe1f (PmmC func) args[2] r=1  (not used)
 str_FindI                           -482  0xfffffe1e (PmmC func) args[2] r=1  (not used)
-str_GetByte                         -475  0xfffffe25 (PmmC func) args[1] r=1  (not used)
+str_GetByte                         -475  0xfffffe25 (PmmC func) args[1] r=1  (usage 3)
 str_GetC                            -474  0xfffffe26 (PmmC func) args[2] r=1  (not used)
 str_GetD                            -471  0xfffffe29 (PmmC func) args[2] r=1  (not used)
 str_GetHexW                         -473  0xfffffe27 (PmmC func) args[2] r=1  (not used)
@@ -6436,8 +6494,8 @@ str_Length                          -483  0xfffffe1d (PmmC func) args[1] r=1  (n
 str_Match                           -479  0xfffffe21 (PmmC func) args[2] r=1  (not used)
 str_MatchI                          -480  0xfffffe20 (PmmC func) args[2] r=1  (not used)
 str_Printf                          -484  0xfffffe1c (PmmC func) args[2] r=1  (not used)
-str_Ptr                             -470  0xfffffe2a (PmmC func) args[1] r=1  (not used)
-str_PutByte                         -477  0xfffffe23 (PmmC func) args[2] r=0  (not used)
+str_Ptr                             -470  0xfffffe2a (PmmC func) args[1] r=1  (usage 6)
+str_PutByte                         -477  0xfffffe23 (PmmC func) args[2] r=0  (usage 6)
 str_PutWord                         -478  0xfffffe22 (PmmC func) args[2] r=0  (not used)
 strheight                            -14  0xfffffff2 (PmmC func) args[0] r=1  (not used)
 strlen                               -10  0xfffffff6 (PmmC func) args[1] r=1  (not used)
@@ -6532,7 +6590,7 @@ TOUCH_XMAXCAL                         80  0x00000050 (const dword)  (not used)
 TOUCH_XMINCAL                         78  0x0000004e (const dword)  (not used)
 TOUCH_YMAXCAL                         81  0x00000051 (const dword)  (not used)
 TOUCH_YMINCAL                         79  0x0000004f (const dword)  (not used)
-toupper                              -45  0xffffffd3 (PmmC func) args[1] r=1  (not used)
+toupper                              -45  0xffffffd3 (PmmC func) args[1] r=1  (usage 3)
 TRANSPARENCY                          21  0x00000015 (const dword)  (not used)
 TRANSPARENT                            0  0x00000000 (const dword)  (not used)
 TRANSPARENT_COLOUR                    20  0x00000014 (const dword)  (not used)
@@ -6586,7 +6644,7 @@ UNCHECKED                              1  0x00000001 (const dword)  (not used)
 UNDERLINED                           128  0x00000080 (const dword)  (not used)
 unicode_page                         -15  0xfffffff1 (PmmC func) args[3] r=1  (not used)
 UP                                     1  0x00000001 (const dword)  (not used)
-UsdIsDifferent                       799  0x0000031f (User func) args[0] r=0  (usage 3)
+UsdIsDifferent                      1257  0x000004e9 (User func) args[0] r=0  (usage 3)
 uSDisNewer                        UNRESOLVED (User func) args[0] r=0  (not used)
 usub_3232                            -72  0xffffffb8 (PmmC func) args[3] r=1  (not used)
 X_MAX                                  0  0x00000000 (const dword)  (not used)

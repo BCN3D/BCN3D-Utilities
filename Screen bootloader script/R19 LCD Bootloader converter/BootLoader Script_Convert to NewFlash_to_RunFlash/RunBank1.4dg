@@ -1,0 +1,162 @@
+#platform "uLCD-35DT"
+// #inherit "4DGL_16bitColours.fnc"
+
+/**************************************************************************************************************
+*                                                                                                             *
+*  Sample program to 'replace' the 'BootUsd' stub from Genie the tools menu.                                  *
+*  It can only run on Diablo Displays, but has several features beyond the standard 'BootUsd' program.        *
+*                                                                                                             *
+*  1. It loads the program off uSD and into FLASH and runs it from there so                                   *
+*     a) The program loads faster as it does not come from uSD every time                                     *
+*     b) The program can now run from Flash freeing up the RAM associated with running a program from uSD     *
+*  2. The program uses Flash memory in bank 0 to store the date/time of the program on uSD                    *
+*  3. The program has options to update the Flash bank when the date/time on uSD is newer, or just different  *
+*  4. Changes could be made to delete the program on uSD after loading, if desired                            *
+*  5. You may want to remove the 2 second delay before the flashbank is run after testing is complete         *
+*                                                                                                             *
+**************************************************************************************************************/
+
+#constant  GenieProg "RunFlash.4xe" // You can rename this to your projects name, but it must be 8.3 format only.
+
+#MODE RUNFLASH
+
+#CONST
+FlashPage   1                   // flash page to write date/time data to. Must give a flashbyte > 'code size' + 17
+FlashByte   2048*FlashPage
+YYYY        0
+MM          1
+DD          2
+HH          3
+NN          4
+SS          5
+ID1         6
+ID2         7
+BlockID1    0x12AB
+BlockID2    0xAB12
+#END
+
+var block[1024], *hndl, ndt[6] ;
+
+func decodeDateTime()
+    ndt[YYYY] := hndl[FILE_DATE] >> 9 + 1980 ;
+    ndt[MM] := (hndl[FILE_DATE] >> 5) & 0xf ;
+    ndt[DD] := hndl[FILE_DATE] & 0x1f ;
+    ndt[HH] := hndl[FILE_TIME] >> 11 ;
+    ndt[NN] := (hndl[FILE_TIME] >> 5) & 0x3f ;
+    ndt[SS] := (hndl[FILE_TIME] & 0x1f) * 2 ;
+endfunc
+
+func printDateTime(var *dt)
+    print(dt[YYYY], "/", [DEC2Z] dt[MM], "/", [DEC2Z] dt[DD]," ", [DEC2Z] dt[HH], ":", [DEC2Z] dt[NN], ":", [DEC2Z] dt[SS]) ;
+endfunc
+
+func uSDisNewer()
+    var i ;
+    for (i := 0; i < 6; i++)        // compare date/time to flash block, must be in yymmddhhnnss order in memory
+        if (block[i] < ndt[i])
+            return 1 ;              // if newer then exit newer
+        else if (block[i] > ndt[i])
+            return 0 ;              // if older then exit older
+        endif
+    next
+    return 0 ;                      // if all equal
+endfunc
+
+//-----------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------
+func UsdIsDifferent()
+    var i ;
+    for (i := 0; i < 6; i++)        // compare date/time to flash block, must be in yymmddhhnnss order in memory
+        if (block[i] != ndt[i])
+            return 1 ;              // if different then exit to update
+        endif
+    next
+    return 0 ;                      // if all equal
+endfunc
+//-----------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------
+
+/* testing only
+func setDateTime(var *dta, var yyyy, var mm, var dd, var hh, var nn, var ss)
+    dta[YYYY] := yyyy ;
+    dta[MM] := mm ;
+    dta[DD] := dd ;
+    dta[HH] := hh ;
+    dta[NN] := nn ;
+    dta[SS] := ss ;
+endfunc
+*/
+
+func main()
+    var i, doupdate ;
+
+    gfx_ScreenMode(LANDSCAPE_R);
+    putstr("Loading...\n");
+    putstr("SIGMA/X R19  BootSD\n");
+    putstr("Build Version 03-08-2018\n");
+    if (!file_Mount())
+        while(!file_Mount())
+            putstr("Drive not mounted...");
+            pause(200);
+            gfx_Cls();
+            pause(200);
+        wend
+    endif
+    hndl := file_Open(GenieProg, 'r') ;
+    if (!hndl)
+        print([STR] GenieProg, " Not Found") ;
+        pause(400);
+        SystemReset();
+    endif
+
+    file_Close(hndl) ;
+    decodeDateTime() ;                                      // decode date+time into yymmddhhnnss array of values
+
+    flash_Copy(FLASHBANK_0, FlashByte, block, 1024);        // read flashbank0 view of current datetime of program in flashbank1
+
+//    setDateTime(block,2016,08,31,08,09,12) ;              // for testing
+
+    if ((block[ID1] != BlockID1) || (block[ID2] != BlockID2))   // this is always true for first run after loading program as flash is cleared by program load
+        doupdate := 1 ;
+        print("Update required: Bank is empty, new is ") ;
+        printDateTime(ndt) ;
+        print("\n") ;
+ //   else if (uSDisNewer())
+    else if (UsdIsDifferent())
+        doupdate := 1 ;
+        print("Update required: ") ;
+        printDateTime(ndt) ;
+        print(" > ") ;
+        printDateTime(block) ;
+        print("\n") ;
+    else
+        doupdate := 0 ;
+        print("Update not required, current is ") ;
+        printDateTime(block) ;
+        print("\n") ;
+    endif
+
+    if (doupdate)
+        i := flash_LoadFile(FLASHBANK_1, GenieProg);        // load to bank
+        if (i)
+            print("Program loaded into Flashbank\n") ;
+        else
+            print("Program failed to load into Flashbank\n") ;
+            repeat forever
+        endif
+        for (i := 0; i < 6; i++)                            // copy new date/time to flash block
+            block[i] := ndt[i] ;
+        next
+        block[ID1] := BlockID1 ;                            // set IDs
+        block[ID2] := BlockID2 ;
+        i := flash_WriteBlock(block, FLASHBANK_0, FlashPage) ;
+        if (i)
+            print("Flash update successful\n") ;
+        else
+            print("Flash update Failed\n") ;            // probably because program is larger than the start of the block we are saving the date/time into
+            repeat forever
+        endif
+    endif
+  //  pause(2000) ;     // delete this to run faster after testing
+    flash_Run(FLASHBANK_1);
+endfunc

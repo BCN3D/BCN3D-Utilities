@@ -1,8 +1,8 @@
 ==============================================================
 ==============================================================
 4DGL Compiler 2.8.1.0 -- Copyright 2004-2016 4D Labs
-** C:\Users\agarciamoreno\Desktop\loadrunbank\LoadRunBank.4dg
-compiled Thu Jul 27 09:47:27 2017
+** C:\Users\agarciamoreno\Desktop\Dev_Pantallas R19\R19 LCD Updater\BootLoader Script\RunBank1.4dg
+compiled Fri Aug 03 13:26:14 2018
 
 ==============================================================
 ==============================================================
@@ -10,22 +10,22 @@ compiled Thu Jul 27 09:47:27 2017
 
 No Ref for file
 [LINKING]
-function 5, main(main entry point), address 0x131, stack usage 4 + 4 
+function 5, main(main entry point), address 0x146, stack usage 4 + 4 
 doupdate                               2  word     [local]  (usage 12)
 i                                      1  word     [local]  (usage 27)
 
 [LINKING]
-function 4, UsdIsDifferent, address 0x31f, stack usage 2 + 4 
+function 4, UsdIsDifferent, address 0x33d, stack usage 2 + 4 
 i                                      1  word     [local]  (usage 15)
 
 i                                      1  word     [local]  (usage 14)
 
 [LINKING]
-function 2, printDateTime, address 0x354, stack usage 0 + 4 
+function 2, printDateTime, address 0x372, stack usage 0 + 4 
 dt                                     1  word     [arg]  (usage 18)
 
 [LINKING]
-function 1, decodeDateTime, address 0x3de, stack usage 0 + 4 
+function 1, decodeDateTime, address 0x3fc, stack usage 0 + 4 
 
 [RESERVED WORDS]
 #inherit
@@ -125,12 +125,12 @@ flash_WriteBlock                  FFFFFE0B        -501  args=3 r=1  (usage 3)
 gfx_Cls                           FFFFFF82        -126  args=0 r=0  (usage 3)
 gfx_ScreenMode                    FFFFFF42        -190  args=1 r=1  (usage 3)
 pause                             FFFFFFFA          -6  args=1 r=0  (usage 9)
-putstr                            FFFFFFF7          -9  args=1 r=1  (usage 9)
+putstr                            FFFFFFF7          -9  args=1 r=1  (usage 12)
 
 [USER FUNCTIONS]
-decodeDateTime                    000003DE  args=0 r=0  (usage 3)
-printDateTime                     00000354  args=1 r=0  (usage 12)
-UsdIsDifferent                    0000031F  args=0 r=0  (usage 3)
+decodeDateTime                    000003FC  args=0 r=0  (usage 3)
+printDateTime                     00000372  args=1 r=0  (usage 12)
+UsdIsDifferent                    0000033D  args=0 r=0  (usage 3)
 
 [GLOBAL VARIABLES]
 block                                  1  word[1024]   (usage 34)
@@ -140,25 +140,26 @@ ndt                                 1026  word[6]   (usage 34)
 [PRIVATE VARIABLES]
 
 [DATA]
-0007: 4C 6F 61 64 69 6E 67 2E 2E 2E 0A 00 42 75 69 6C     Loading.....Buil
-0017: 64 20 56 65 72 73 69 6F 6E 20 32 37 2D 30 37 2D     d Version 27-07-
-0027: 32 30 31 37 0A 00 44 72 69 76 65 20 6E 6F 74 20     2017..Drive not 
-0037: 6D 6F 75 6E 74 65 64 2E 2E 2E 00 52 75 6E 46 6C     mounted....RunFl
-0047: 61 73 68 2E 34 78 65 00 20 4E 6F 74 20 46 6F 75     ash.4xe. Not Fou
-0057: 6E 64 00 55 70 64 61 74 65 20 72 65 71 75 69 72     nd.Update requir
-0067: 65 64 3A 20 42 61 6E 6B 20 69 73 20 65 6D 70 74     ed: Bank is empt
-0077: 79 2C 20 6E 65 77 20 69 73 20 00 55 70 64 61 74     y, new is .Updat
-0087: 65 20 72 65 71 75 69 72 65 64 3A 20 00 20 3E 20     e required: . > 
-0097: 00 55 70 64 61 74 65 20 6E 6F 74 20 72 65 71 75     .Update not requ
-00A7: 69 72 65 64 2C 20 63 75 72 72 65 6E 74 20 69 73     ired, current is
-00B7: 20 00 50 72 6F 67 72 61 6D 20 6C 6F 61 64 65 64      .Program loaded
-00C7: 20 69 6E 74 6F 20 46 6C 61 73 68 62 61 6E 6B 0A      into Flashbank.
-00D7: 00 50 72 6F 67 72 61 6D 20 66 61 69 6C 65 64 20     .Program failed 
-00E7: 74 6F 20 6C 6F 61 64 20 69 6E 74 6F 20 46 6C 61     to load into Fla
-00F7: 73 68 62 61 6E 6B 0A 00 46 6C 61 73 68 20 75 70     shbank..Flash up
-0107: 64 61 74 65 20 73 75 63 63 65 73 73 66 75 6C 0A     date successful.
-0117: 00 46 6C 61 73 68 20 75 70 64 61 74 65 20 46 61     .Flash update Fa
-0127: 69 6C 65 64 0A 00 2F 00 3A 00                       iled../.:.
+0007: 4C 6F 61 64 69 6E 67 2E 2E 2E 0A 00 53 49 47 4D     Loading.....SIGM
+0017: 41 2F 58 20 52 31 39 20 20 42 6F 6F 74 53 44 0A     A/X R19  BootSD.
+0027: 00 42 75 69 6C 64 20 56 65 72 73 69 6F 6E 20 30     .Build Version 0
+0037: 33 2D 30 38 2D 32 30 31 38 0A 00 44 72 69 76 65     3-08-2018..Drive
+0047: 20 6E 6F 74 20 6D 6F 75 6E 74 65 64 2E 2E 2E 00      not mounted....
+0057: 52 75 6E 46 6C 61 73 68 2E 34 78 65 00 20 4E 6F     RunFlash.4xe. No
+0067: 74 20 46 6F 75 6E 64 00 55 70 64 61 74 65 20 72     t Found.Update r
+0077: 65 71 75 69 72 65 64 3A 20 42 61 6E 6B 20 69 73     equired: Bank is
+0087: 20 65 6D 70 74 79 2C 20 6E 65 77 20 69 73 20 00      empty, new is .
+0097: 55 70 64 61 74 65 20 72 65 71 75 69 72 65 64 3A     Update required:
+00A7: 20 00 20 3E 20 00 55 70 64 61 74 65 20 6E 6F 74      . > .Update not
+00B7: 20 72 65 71 75 69 72 65 64 2C 20 63 75 72 72 65      required, curre
+00C7: 6E 74 20 69 73 20 00 50 72 6F 67 72 61 6D 20 6C     nt is .Program l
+00D7: 6F 61 64 65 64 20 69 6E 74 6F 20 46 6C 61 73 68     oaded into Flash
+00E7: 62 61 6E 6B 0A 00 50 72 6F 67 72 61 6D 20 66 61     bank..Program fa
+00F7: 69 6C 65 64 20 74 6F 20 6C 6F 61 64 20 69 6E 74     iled to load int
+0107: 6F 20 46 6C 61 73 68 62 61 6E 6B 0A 00 46 6C 61     o Flashbank..Fla
+0117: 73 68 20 75 70 64 61 74 65 20 73 75 63 63 65 73     sh update succes
+0127: 73 66 75 6C 0A 00 46 6C 61 73 68 20 75 70 64 61     sful..Flash upda
+0137: 74 65 20 46 61 69 6C 65 64 0A 00 2F 00 3A 00        te Failed../.:.
 
 [__MAXPROG]
 32750
@@ -168,7 +169,7 @@ ndt                                 1026  word[6]   (usage 34)
 [PROGRAM]
 main
 [CODESIZE]
-1094
+1124
 [MEMSIZE]
 1031
 [ARGCOUNT]
@@ -183,6 +184,6 @@ NO
 128
 
 [PROJECT]
-C:\Users\agarciamoreno\Desktop\loadrunbank\LoadRunBank.4dg
+C:\Users\agarciamoreno\Desktop\Dev_Pantallas R19\R19 LCD Updater\BootLoader Script\RunBank1.4dg
 C:\Program Files (x86)\4D Labs\4D Workshop 4 IDE\include\uLCD-35DT.fnc
 C:\Program Files (x86)\4D Labs\4D Workshop 4 IDE\include\Diablo16_Functions.fnc

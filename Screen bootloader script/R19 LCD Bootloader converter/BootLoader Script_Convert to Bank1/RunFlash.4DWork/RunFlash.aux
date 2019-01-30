@@ -1,0 +1,219 @@
+==============================================================
+==============================================================
+4DGL Compiler 2.8.1.0 -- Copyright 2004-2016 4D Labs
+** C:\Users\agarciamoreno\Desktop\Dev_Pantallas R19\R19 LCD Updater\BootLoader Script_dev\RunFlash.4dg
+compiled Fri Aug 03 13:26:11 2018
+
+==============================================================
+==============================================================
+
+
+No Ref for file
+[LINKING]
+function 6, main(main entry point), address 0x1e4, stack usage 6 + 4 
+doupdate                               2  word     [local]  (usage 12)
+fileHandle                             3  word     [local]  (usage 9)
+i                                      1  word     [local]  (usage 30)
+
+[LINKING]
+function 5, setFileName, address 0x46c, stack usage 8 + 4 
+n                                      4  word     [local]  (usage 12)
+c                                      3  word     [local]  (usage 12)
+fname                                  1  word     [arg]  (usage 3)
+fp                                     1  word     [arg]  (usage 3)
+src                                    2  word     [local]  (usage 9)
+dest                                   1  word     [local]  (usage 9)
+
+[LINKING]
+function 4, UsdIsDifferent, address 0x4e9, stack usage 2 + 4 
+i                                      1  word     [local]  (usage 15)
+
+i                                      1  word     [local]  (usage 14)
+
+[LINKING]
+function 2, printDateTime, address 0x51e, stack usage 0 + 4 
+dt                                     1  word     [arg]  (usage 18)
+
+[LINKING]
+function 1, decodeDateTime, address 0x5a8, stack usage 0 + 4 
+
+[RESERVED WORDS]
+#inherit
+#LISTCODE
+#MODE
+#STACK
+#OPTIMIZE_ON
+#OPTIMIZE_OFF
+byte
+word
+dword
+float
+private
+#IF
+#IFNOT
+#ELSE
+#ENDIF
+#CONST
+#constant
+#USE
+USING
+func
+endfunc
+var
+#STOP
+#DATA
+#ASM
+#END
+#platform
+EXISTS
+#ERROR
+#MESSAGE
+#NOTICE
+sizeof
+argcount
+if
+else
+endif
+while
+wend
+repeat
+until
+forever
+return
+break
+continue
+for
+next
+switch
+case
+default
+endswitch
+print
+goto
+gosub
+endsub
+mcall
+lookup8
+lookup16
+
+[MACRO]
+
+[CONSTANTS]
+__MAXMEM                          00008000      32768  (usage 1)
+__MAXPROG                         00007FEE      32750  (usage 1)
+BlockID1                          000012AB       4779  (usage 6)
+BlockID2                          0000AB12      43794  (usage 6)
+DD                                00000002          2  (usage 6)
+DEC2Z                             0000120A       4618  (usage 15)
+DIABLO                            00000003          3  (usage 3)
+FILE_DATE                         0000000A         10  (usage 9)
+FILE_NAME                         0000000B         11  (usage 3)
+FILE_TIME                         00000009          9  (usage 9)
+FLASHBANK_0                       00000000          0  (usage 6)
+FLASHBANK_1                       00000001          1  (usage 6)
+FlashByte                         00000800       2048  (usage 3)
+FlashPage                         00000001          1  (usage 5)
+GenieProg                         "RunBank0.4xe"  (usage 12)
+GenieProg_tobeErase               "RunFlash.4xe"  (usage 6)
+GenieProg_tobeRenamed             "NewFlash.4xe"  (usage 3)
+HH                                00000003          3  (usage 6)
+ID1                               00000006          6  (usage 6)
+ID2                               00000007          7  (usage 6)
+LANDSCAPE_R                       00000001          1  (usage 3)
+MM                                00000001          1  (usage 6)
+NN                                00000004          4  (usage 6)
+RUNFLASH                          00000080        128  (usage 3)
+SS                                00000005          5  (usage 6)
+STR                               00000080        128  (usage 3)
+YYYY                              00000000          0  (usage 6)
+
+[PmmC FUNCTIONS]
+file_Close                        FFFFFE51        -431  args=1 r=1  (usage 6)
+file_Erase                        FFFFFE42        -446  args=1 r=1  (usage 6)
+file_Mount                        FFFFFE3C        -452  args=0 r=1  (usage 6)
+file_Open                         FFFFFE52        -430  args=2 r=1  (usage 6)
+flash_Copy                        FFFFFE10        -496  args=4 r=1  (usage 3)
+flash_LoadFile                    FFFFFE0C        -500  args=2 r=1  (usage 3)
+flash_Run                         FFFFFE0F        -497  args=1 r=1  (usage 3)
+flash_WriteBlock                  FFFFFE0B        -501  args=3 r=1  (usage 3)
+gfx_Cls                           FFFFFF82        -126  args=0 r=0  (usage 3)
+gfx_ScreenMode                    FFFFFF42        -190  args=1 r=1  (usage 3)
+isalnum                           FFFFFFD7         -41  args=1 r=1  (usage 3)
+pause                             FFFFFFFA          -6  args=1 r=0  (usage 24)
+putstr                            FFFFFFF7          -9  args=1 r=1  (usage 18)
+str_GetByte                       FFFFFE25        -475  args=1 r=1  (usage 3)
+str_Ptr                           FFFFFE2A        -470  args=1 r=1  (usage 6)
+str_PutByte                       FFFFFE23        -477  args=2 r=0  (usage 6)
+toupper                           FFFFFFD3         -45  args=1 r=1  (usage 3)
+
+[USER FUNCTIONS]
+decodeDateTime                    000005A8  args=0 r=0  (usage 3)
+printDateTime                     0000051E  args=1 r=0  (usage 12)
+setFileName                       0000046C  args=2 r=0  (usage 3)
+UsdIsDifferent                    000004E9  args=0 r=0  (usage 3)
+
+[GLOBAL VARIABLES]
+block                                  1  word[1024]   (usage 34)
+hndl                                1025  word       (usage 27)
+ndt                                 1026  word[6]   (usage 34)
+
+[PRIVATE VARIABLES]
+
+[DATA]
+0007: 57 65 6C 63 6F 6D 65 20 74 6F 20 53 69 67 6D 61     Welcome to Sigma
+0017: 20 42 6F 6F 74 75 53 44 20 75 70 64 61 74 65 72      BootuSD updater
+0027: 0A 00 42 75 69 6C 64 20 56 65 72 73 69 6F 6E 20     ..Build Version 
+0037: 30 33 2D 30 38 2D 32 30 31 38 0A 00 44 72 69 76     03-08-2018..Driv
+0047: 65 20 6E 6F 74 20 6D 6F 75 6E 74 65 64 2E 2E 2E     e not mounted...
+0057: 00 52 75 6E 42 61 6E 6B 30 2E 34 78 65 00 20 4E     .RunBank0.4xe. N
+0067: 6F 74 20 46 6F 75 6E 64 00 55 70 64 61 74 65 20     ot Found.Update 
+0077: 72 65 71 75 69 72 65 64 3A 20 42 61 6E 6B 20 69     required: Bank i
+0087: 73 20 65 6D 70 74 79 2C 20 6E 65 77 20 69 73 20     s empty, new is 
+0097: 00 55 70 64 61 74 65 20 72 65 71 75 69 72 65 64     .Update required
+00A7: 3A 20 00 20 3E 20 00 55 70 64 61 74 65 20 6E 6F     : . > .Update no
+00B7: 74 20 72 65 71 75 69 72 65 64 2C 20 63 75 72 72     t required, curr
+00C7: 65 6E 74 20 69 73 20 00 50 72 6F 67 72 61 6D 20     ent is .Program 
+00D7: 6C 6F 61 64 65 64 20 69 6E 74 6F 20 46 6C 61 73     loaded into Flas
+00E7: 68 62 61 6E 6B 0A 00 50 72 6F 67 72 61 6D 20 66     hbank..Program f
+00F7: 61 69 6C 65 64 20 74 6F 20 6C 6F 61 64 20 69 6E     ailed to load in
+0107: 74 6F 20 46 6C 61 73 68 62 61 6E 6B 0A 00 46 6C     to Flashbank..Fl
+0117: 61 73 68 20 75 70 64 61 74 65 20 73 75 63 63 65     ash update succe
+0127: 73 73 66 75 6C 0A 00 46 6C 61 73 68 20 75 70 64     ssful..Flash upd
+0137: 61 74 65 20 46 61 69 6C 65 64 0A 00 45 72 61 73     ate Failed..Eras
+0147: 65 20 53 69 67 6D 61 20 42 6F 6F 74 75 53 44 20     e Sigma BootuSD 
+0157: 75 70 64 61 74 65 72 28 52 75 6E 46 6C 61 73 68     updater(RunFlash
+0167: 2E 34 78 65 20 66 69 6C 65 29 20 0A 00 52 75 6E     .4xe file) ..Run
+0177: 46 6C 61 73 68 2E 34 78 65 00 45 72 61 73 65 20     Flash.4xe.Erase 
+0187: 53 69 67 6D 61 20 42 6F 6F 74 75 53 44 28 52 75     Sigma BootuSD(Ru
+0197: 6E 42 61 6E 6B 31 2E 34 78 65 20 66 69 6C 65 29     nBank1.4xe file)
+01A7: 20 0A 00 4E 65 77 46 6C 61 73 68 2E 34 78 65 00      ..NewFlash.4xe.
+01B7: 53 75 63 63 65 73 73 20 0A 00 46 61 69 6C 65 64     Success ..Failed
+01C7: 20 0A 00 4C 65 74 73 20 75 70 64 61 74 65 20 42      ..Lets update B
+01D7: 6F 6F 74 75 53 44 20 0A 00 2F 00 3A 00              ootuSD ../.:.
+
+[__MAXPROG]
+32750
+[__MAXMEM]
+32768
+
+[PROGRAM]
+main
+[CODESIZE]
+1552
+[MEMSIZE]
+1031
+[ARGCOUNT]
+0
+[RETURNS]
+NO
+[STACKSIZE]
+0 (AUTO)
+[STACK_ESTIMATE]
+40   (nb:- worst case estimate)
+[MODE]
+128
+
+[PROJECT]
+C:\Users\agarciamoreno\Desktop\Dev_Pantallas R19\R19 LCD Updater\BootLoader Script_dev\RunFlash.4dg
+C:\Program Files (x86)\4D Labs\4D Workshop 4 IDE\include\Gen4-uLCD-35DCT-CLB.fnc
+C:\Program Files (x86)\4D Labs\4D Workshop 4 IDE\include\Diablo16_Functions.fnc
