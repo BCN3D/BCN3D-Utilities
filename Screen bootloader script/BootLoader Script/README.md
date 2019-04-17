@@ -8,10 +8,12 @@ Option 1#
 
 3. Load the script using the microUSB Programming Adaptor (uUSB-PA5 or uUSB-PA5-II).
 
-Option 2# (Windows)
+Option 2#
 
 1. Open LoadProgram.exe.
 
 2. Set BootLoader_LCD_rdy.4xe as Program to Load.
 
-3. Press OK
+3. Load the script using the microUSB Programming Adaptor (uUSB-PA5 or uUSB-PA5-II).
+
+4. Press OK
